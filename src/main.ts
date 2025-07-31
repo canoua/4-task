@@ -1,4 +1,4 @@
+import { component } from './component'
 import './style.css'
-import { setupCounter } from './counter'
 
-setupCounter();
+component()
