@@ -1,5 +1,26 @@
-.line {
+.wrapper {
   width: 100px;
-  height: 3px;
+  height: 7px;
+  position: relative;
+}
+
+.line {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.range {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
   background-color: blue;
+  cursor: grab;
+  z-index: 100;
 }
