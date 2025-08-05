@@ -1,0 +1,4 @@
+addEventListener:
+  - mousedown
+  - mouseup
+  - mouseup
