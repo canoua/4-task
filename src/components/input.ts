@@ -1,33 +1,36 @@
 export function input() {
-  const app = document.getElementById("app");
-  const line = document.createElement("div");
-  const range = document.createElement("div");
-  const wrapper = document.createElement("div");
+  class Input {
+    // разобраться почему не работает с типом htmlelement|undefined
+    // главный контейнер
+    app: any;
+    // линия инпута
+    line: HTMLElement | undefined;
+    // ползунок
+    range: HTMLElement | undefined;
+    // контейнер инпута
+    wrapper: any;
+    // для перетаскивания ползунка, отслеживания событий мыши
 
-  wrapper.classList.add('wrapper');
-  range.classList.add('range');
-  line.classList.add('line');
-  wrapper.appendChild(range);
-  wrapper.appendChild(line);
-  app?.appendChild(wrapper);
+    constructor(containerClass: any) {
+      this.app = document.getElementById(containerClass)
+      this.line = document.createElement('div');
+      this.wrapper = document.createElement('div');
+      this.range = document.createElement('div');
 
-  let dragging = false;
+      this.wrapper?.classList.add('wrapper');
+      this.app.appendChild(this.wrapper);
+      this.range?.classList.add('range');
+      this.line?.classList.add('line');
+      this.wrapper?.appendChild(this.range);
+      this.wrapper.appendChild(this.line);
 
-  range.addEventListener('mousedown', draggableFunc);
-  // range.addEventListener('mouseup', function() {
-  //   range.setAttribute('draggable', 'false')
-  // });
-
-  
-  function draggableFunc() {
-    range.setAttribute('draggable', 'true')
+      this.range?.addEventListener('mousedown', function() {
+        this.draggable = true;
+      })
+    }
   }
 
-  range.addEventListener('mouseup', function() {
-    console.log('mouseup');
-  })
-
-  document.addEventListener('mousemove', function() {
-    console.log('mousemove');
+  document.addEventListener('DOMContentLoaded', function() {
+    const input = new Input('app');
   })
 }
