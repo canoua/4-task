@@ -1,15 +1,10 @@
 export function input() {
   class Input {
     // разобраться почему не работает с типом htmlelement|undefined
-    // главный контейнер
     app: any;
-    // линия инпута
     line: HTMLElement | undefined;
-    // ползунок
     range: HTMLElement | undefined;
-    // контейнер инпута
     wrapper: any;
-    // для перетаскивания ползунка, отслеживания событий мыши
 
     constructor(containerClass: any) {
       this.app = document.getElementById(containerClass)
@@ -30,7 +25,34 @@ export function input() {
     }
   }
 
+  class Panel {
+    app: any;
+    title: any;
+    container: any;
+    inputStep: any;
+    inputWidth: any;
+    inputMin: any;
+    constructor(containerClass: any) {
+      this.app = document.getElementById(containerClass)
+      this.container = document.createElement('div');
+      this.container.classList.add('panel-container');
+      
+      this.inputMin = document.createElement('input');
+      this.inputMin.setAttribute('type', 'text');
+      this.inputMin.setAttribute('name', 'input-min');
+      this.inputMin.classList.add('input-min');
+      
+      this.title = document.createElement('h1');
+      this.title.textContent = 'Панель для управления ползунком';
+
+      this.container.appendChild(this.title)
+      this.app.appendChild(this.container);
+      this.container.appendChild(this.inputMin)
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     const input = new Input('app');
+    const panel = new Panel('app');
   })
 }
