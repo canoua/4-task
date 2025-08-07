@@ -4,7 +4,8 @@ export function input() {
     app: any;
     line: HTMLElement | undefined;
     range: HTMLElement | undefined;
-    wrapper: any;
+    wrapper: HTMLElement | undefined;
+    value: any;
 
     constructor(containerClass: any) {
       this.app = document.getElementById(containerClass)
@@ -12,14 +13,14 @@ export function input() {
       this.wrapper = document.createElement('div');
       this.range = document.createElement('div');
 
-      this.wrapper?.classList.add('wrapper');
+      this.wrapper.classList.add('wrapper');
       this.app.appendChild(this.wrapper);
-      this.range?.classList.add('range');
-      this.line?.classList.add('line');
-      this.wrapper?.appendChild(this.range);
+      this.range.classList.add('range');
+      this.line.classList.add('line');
+      this.wrapper.appendChild(this.range);
       this.wrapper.appendChild(this.line);
 
-      this.range?.addEventListener('mousedown', function() {
+      this.range.addEventListener('mousedown', function() {
         this.draggable = true;
       })
     }
@@ -36,18 +37,24 @@ export function input() {
       this.app = document.getElementById(containerClass)
       this.container = document.createElement('div');
       this.container.classList.add('panel-container');
-      
-      this.inputMin = document.createElement('input');
-      this.inputMin.setAttribute('type', 'text');
-      this.inputMin.setAttribute('name', 'input-min');
-      this.inputMin.classList.add('input-min');
-      
+
       this.title = document.createElement('h1');
       this.title.textContent = 'Панель для управления ползунком';
 
-      this.container.appendChild(this.title)
       this.app.appendChild(this.container);
-      this.container.appendChild(this.inputMin)
+      this.container.appendChild(this.title);
+      this.createInput(this.container, this.inputWidth, 'input-width', 'Длина', 'input-width');
+      this.createInput(this.container, this.inputStep, 'input-step', 'Шаг', 'input-step');
+      this.createInput(this.container, this.inputMin, 'input-min', 'Минимальное значение', 'input-min');
+    }
+
+    createInput(parent: any, element: any, name: string, placeholder: string, className: string) {
+      element = document.createElement('input');
+      element.setAttribute('type', 'text');
+      element.setAttribute('name', name); 
+      element.setAttribute('placeholder', placeholder);                                 
+      element.classList.add(className);
+      parent.appendChild(element);
     }
   }
 
