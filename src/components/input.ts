@@ -6,8 +6,11 @@ export function input() {
     range: HTMLElement | undefined;
     wrapper: HTMLElement | undefined;
     value: any;
+    // координаты
+    x: Number = 0;
+    y: Number = 0;
 
-    constructor(containerClass: any) {
+    constructor(containerClass: any, dragInput?: any) {
       this.app = document.getElementById(containerClass)
       this.line = document.createElement('div');
       this.wrapper = document.createElement('div');
@@ -20,9 +23,37 @@ export function input() {
       this.wrapper.appendChild(this.range);
       this.wrapper.appendChild(this.line);
 
-      this.range.addEventListener('mousedown', function() {
-        this.draggable = true;
+      // this.range.addEventListener('mousedown', function() {
+      //   this.draggable = true;
+      // })
+
+      dragInput = this.dragInput;
+      document.addEventListener('DOMContentLoaded', dragInput);
+    }
+
+    dragInput(x?: Number | any, y?: Number | any, range?: HTMLElement | undefined, listener?: any) {
+      range = this.range;
+      listener = this.listener;
+      x = this.x;
+      y = this.y;
+      range?.addEventListener('mousedown', function(e: any) {
+        document.addEventListener('mousemove', listener);
+        x = e.clientX - range.getBoundingClientRect().left;
+        y = e.clientY - range.getBoundingClientRect().top;
       })
+    }
+
+    listener(e: any, x: Number | any, y: Number | any, range: HTMLElement | undefined) {
+      x = this.x;
+      y = this.y;
+
+      // ! - говорит о том, что уверен в типе данных?
+      range = this.range;
+
+      if(range != undefined) {
+        range.style.left = e.pageX - x + "px";
+        range.style.top = e.pageY - y + "px";
+      }
     }
   }
 
@@ -61,5 +92,6 @@ export function input() {
   document.addEventListener('DOMContentLoaded', function() {
     const input = new Input('app');
     const panel = new Panel('app');
+    // input.dragInput();
   })
 }
