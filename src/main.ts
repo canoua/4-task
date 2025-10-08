@@ -1,4 +1,6 @@
-import { input } from './components/input'
+// import { input } from './components/input'
+import { test } from './components/test'
 import './style.css'
 
-input()
+test()
+// input()

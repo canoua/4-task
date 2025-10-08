@@ -3,14 +3,14 @@ export function input() {
     // разобраться почему не работает с типом htmlelement|undefined
     app: any;
     line: HTMLElement | undefined;
-    range: HTMLElement | undefined;
+    range: HTMLElement;
     wrapper: HTMLElement | undefined;
     value: any;
     // координаты
     x: Number = 0;
     y: Number = 0;
 
-    constructor(containerClass: any, dragInput?: any) {
+    constructor(containerClass: any, dragInput?: any, range?: HTMLElement) {
       this.app = document.getElementById(containerClass)
       this.line = document.createElement('div');
       this.wrapper = document.createElement('div');
@@ -22,16 +22,15 @@ export function input() {
       this.line.classList.add('line');
       this.wrapper.appendChild(this.range);
       this.wrapper.appendChild(this.line);
-
-      // this.range.addEventListener('mousedown', function() {
-      //   this.draggable = true;
-      // })
+  
 
       dragInput = this.dragInput;
-      document.addEventListener('DOMContentLoaded', dragInput);
+      range = this.range;
+     
+      document.addEventListener('DOMContentLoaded', dragInput());
     }
 
-    dragInput(x?: Number | any, y?: Number | any, range?: HTMLElement | undefined, listener?: any) {
+    dragInput(x: Number | any, y: Number | any, range?: HTMLElement, listener?: any): void {
       range = this.range;
       listener = this.listener;
       x = this.x;
@@ -43,17 +42,16 @@ export function input() {
       })
     }
 
-    listener(e: any, x: Number | any, y: Number | any, range: HTMLElement | undefined) {
+    listener(e: any, x: Number | any, y: Number | any, range: HTMLElement) {
       x = this.x;
       y = this.y;
 
       // ! - говорит о том, что уверен в типе данных?
-      range = this.range;
+      range = this.range!;
 
-      if(range != undefined) {
-        range.style.left = e.pageX - x + "px";
-        range.style.top = e.pageY - y + "px";
-      }
+      range.style.left = e.pageX - x + "px";
+      range.style.top = e.pageY - y + "px";
+     
     }
   }
 
@@ -91,7 +89,9 @@ export function input() {
 
   document.addEventListener('DOMContentLoaded', function() {
     const input = new Input('app');
-    const panel = new Panel('app');
+    // const panel = new Panel('app');
+    // console.log(input.range);
+    
     // input.dragInput();
   })
 }
