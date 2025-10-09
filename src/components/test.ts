@@ -1,48 +1,52 @@
 export function test() {
   class Input {
-    range: any = document.getElementsByClassName('range');
+    range: any = document.getElementById('range');
        // координаты
     x: Number = 0;
     y: Number = 0;
     id: any;
 
-    constructor(id: any, dragInput?: any, range?: any) {
+    constructor(id: any, mouseDown?: any, range?: any) {
       range = this.range;
       id = this.id;
-      // range = document.getElementsByClassName('range');
-      // range.setAttribute("id", id)
-      // dragInput = this.dragInput;
-      this.logger();
+      mouseDown = this.mouseDown;
+      mouseDown(range);
     }
 
-    dragInput(x?: Number | any, logger?: any, y?: Number | any, range?: HTMLElement, listener?: any) {
+    dragInput(x?: Number | any, y?: Number | any, range?: HTMLElement, listener?: any) {
       range = this.range;
       listener = this.listener;
       x = this.x;
       y = this.y;
-  
-      // logger = this.logger;
+    
+      this.mouseDown(range);
     }
 
-    logger() {
-      console.log('test');
+    mouseDown(elem?: any) {
+      elem.addEventListener('mousedown', function() {
+        console.log('mousedown');
+        document.addEventListener('mousemove', function() {
+          console.log('mousemove');
+        })
+      })
     }
 
 
-    listener(e: any, x: Number | any, y: Number | any, range: HTMLElement) {
+    listener(e: any, x: Number | any, y: Number | any, range: HTMLElement): void {
       x = this.x;
       y = this.y;
+      console.log('listener');
+      
 
       // ! - говорит о том, что уверен в типе данных?
       range = this.range;
 
-      range.style.left = e.pageX - x + "px";
-      range.style.top = e.pageY - y + "px";
+      this.range.style.left = e.pageX - x + "px";
+      this.range.style.top = e.pageY - y + "px";
     }
   }
 
   document.addEventListener('DOMContentLoaded', function() {
     const input = new Input('input');
-    // input.dragInput();
   })
 }
