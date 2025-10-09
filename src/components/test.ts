@@ -11,14 +11,8 @@ export function test() {
       id = this.id;
       // range = document.getElementsByClassName('range');
       // range.setAttribute("id", id)
-      // console.log('test');
       // dragInput = this.dragInput;
-      // range.addEventListener('click', function() {
-      //   console.log('click');
       this.logger();
-      // })
-      // dragInput();
-      // document.addEventListener('DOMContentLoaded', dragInput());
     }
 
     dragInput(x?: Number | any, logger?: any, y?: Number | any, range?: HTMLElement, listener?: any) {
@@ -26,14 +20,12 @@ export function test() {
       listener = this.listener;
       x = this.x;
       y = this.y;
-     
-
-      logger = this.logger;
-      // range?.addEventListener('click', logger)
+  
+      // logger = this.logger;
     }
 
     logger() {
-       console.log('test');
+      console.log('test');
     }
 
 
