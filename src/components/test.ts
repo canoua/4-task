@@ -23,7 +23,7 @@ export function test() {
     }
 
     mouseDown(elem?: any) {
-      elem.addEventListener('mousedown', function() {
+      elem.addEventListener('mousedown', function(e: any) {
         console.log('mousedown');
         document.addEventListener('mousemove', function() {
           console.log('mousemove');
@@ -31,12 +31,16 @@ export function test() {
       })
     }
 
+    mouseDownFunc() {
+      
+    }
+
 
     listener(e: any, x: Number | any, y: Number | any, range: HTMLElement): void {
       x = this.x;
       y = this.y;
       console.log('listener');
-      
+
 
       // ! - говорит о том, что уверен в типе данных?
       range = this.range;
