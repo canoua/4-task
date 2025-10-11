@@ -6,24 +6,23 @@ export function test() {
     y: any = 0;
     id: any;
 
+    // добавить свойства обработчиков событий мыши
+    // затем привязать с помощью bind
+
     constructor(range?: any) {
       this.range = range; 
       document.addEventListener('mousedown', this.mouseDown);
       document.addEventListener('mouseup', this.mouseUp);
-      this.mouseMove;
-      
+      // document.addEventListener('mousemove', this.mouseMove);
     }
 
-    mouseDown() {
+    mouseDown( event?: any, x?: any, y?: any) {
       console.log('mouseDown');
+      this.mouseMove
     }
 
-    mouseMove(e: MouseEvent) {
+    mouseMove() {
       console.log('mouseMove');
-      this.range.style.left = `${e.pageX - this.x}px`;
-      this.range.style.top = `${e.pageY - this.y}px`;
-      console.log(this.x);
-      
     }
 
     mouseUp() {
@@ -33,5 +32,6 @@ export function test() {
 
   document.addEventListener('DOMContentLoaded', function() {
     const input = new Input();
+    // input.mouseDown();
   })
 }
