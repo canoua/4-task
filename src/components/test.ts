@@ -1,37 +1,69 @@
 export function test() {
   class Input {
     range: any = document.getElementById('range');
-       // координаты
+    // координаты мыши
     x: any = 0;
     y: any = 0;
-    id: any;
 
-    // добавить свойства обработчиков событий мыши
-    // затем привязать с помощью bind
+    // определяем координаты ползунка
+    rangeCoords: any = this.range.getBoundingClientRect();
+    coords: any = {
+        x: this.rangeCoords.left + window.scrollX,
+        y: this.rangeCoords.top + window.scrollY
+    };
+
+    positionRange: any;
+
+    // свойства обработчиков событий мыши
+    handlerMouseDown: any;
+    handlerMouseUp: any;
+    handlerMouseMove: any;
 
     constructor(range?: any) {
       this.range = range; 
-      document.addEventListener('mousedown', this.mouseDown);
-      document.addEventListener('mouseup', this.mouseUp);
-      // document.addEventListener('mousemove', this.mouseMove);
+      this.handlerMouseDown = this.mouseDown.bind(this);
+      this.handlerMouseUp = this.mouseUp.bind(this);
+      this.handlerMouseMove = this.mouseMove.bind(this);
+      this.positionRange = this.newPositionRange.bind(this);
+
+      document.addEventListener('mousedown', this.handlerMouseDown);
+      document.addEventListener('mouseup', this.handlerMouseUp);
+
+      console.log(this.positionRange);
+      
+      // не удалять!
+      // console.log(this.coords.x);
+      // console.log(this.coords.y);
     }
 
-    mouseDown( event?: any, x?: any, y?: any) {
+    mouseDown() {
       console.log('mouseDown');
-      this.mouseMove
+      document.addEventListener('mousemove', this.handlerMouseMove);
     }
 
-    mouseMove() {
-      console.log('mouseMove');
+    mouseMove(event: any) {
+      this.x = event.clientX;
+      this.y = event.clientY;
+      console.log(`x=${this.x}, y=${this.y}`);
     }
 
     mouseUp() {
       console.log('mouseUp');
+      // убираем mousemove
+      document.removeEventListener('mousemove', this.handlerMouseMove);
+      // console.log();
+      this.newPositionRange();
+      
+    }
+
+    newPositionRange() {
+      this.coords.x = this.x;
+      this.range.style.left = `${this.coords.x}px`;
+      // console.log(this.coords.x);
     }
   }
 
   document.addEventListener('DOMContentLoaded', function() {
     const input = new Input();
-    // input.mouseDown();
   })
 }
