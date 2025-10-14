@@ -21,7 +21,7 @@ export function test() {
 
     constructor(range?: any) {
       range = this.range;
-      // this.range = range; 
+    
       this.handlerMouseDown = this.mouseDown.bind(this);
       this.handlerMouseUp = this.mouseUp.bind(this);
       this.handlerMouseMove = this.mouseMove.bind(this);
@@ -29,9 +29,6 @@ export function test() {
 
       document.addEventListener('mousedown', this.handlerMouseDown);
       document.addEventListener('mouseup', this.handlerMouseUp);
-      // this.range.style.left = '12px';
-
-      // console.log(this.positionRange);
       
       // не удалять!
       // console.log(this.coords.x);
@@ -54,7 +51,6 @@ export function test() {
       // убираем mousemove
       document.removeEventListener('mousemove', this.handlerMouseMove);
       this.newPositionRange();
-      
     }
 
     newPositionRange() {
