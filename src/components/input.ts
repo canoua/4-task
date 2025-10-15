@@ -90,8 +90,5 @@ export function input() {
   document.addEventListener('DOMContentLoaded', function() {
     const input = new Input('app');
     // const panel = new Panel('app');
-    // console.log(input.range);
-    
-    // input.dragInput();
   })
 }
