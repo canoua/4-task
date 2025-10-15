@@ -29,33 +29,27 @@ export function test() {
 
       document.addEventListener('mousedown', this.handlerMouseDown);
       document.addEventListener('mouseup', this.handlerMouseUp);
-      
-      // не удалять!
-      // console.log(this.coords.x);
-      // console.log(this.coords.y);
     }
 
     mouseDown() {
-      console.log('mouseDown');
       document.addEventListener('mousemove', this.handlerMouseMove);
     }
 
     mouseMove(event: any) {
       this.x = event.clientX;
       this.y = event.clientY;
-      console.log(`x=${this.x}, y=${this.y}`);
+      this.newPositionRange();
     }
 
     mouseUp() {
-      console.log('mouseUp');
-      // убираем mousemove
       document.removeEventListener('mousemove', this.handlerMouseMove);
       this.newPositionRange();
     }
 
     newPositionRange() {
       this.coords.x = this.x;
-      this.range.style.left = '12px';
+      this.range.style.left = `${this.x}px`;
+      this.range.style.top = `${this.y}px`;
     }
   }
 
