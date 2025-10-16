@@ -1,7 +1,11 @@
 export function test() {
   class Input {
-    range: any = document.getElementById('range');
-    line: any = document.getElementById('line');
+    // range: any = document.getElementById('range');
+    range: any = document.createElement('div');
+    app: any;
+    line: HTMLElement | undefined;
+    // range: HTMLElement;
+    wrapper: HTMLElement | undefined;
     // координаты мыши
     x: any = 0;
     y: any = 0;
@@ -22,9 +26,21 @@ export function test() {
     handlerMouseUp: any;
     handlerMouseMove: any;
 
-    constructor(range?: any) {
-      range = this.range;
-    
+    constructor() {
+      // инициализация элементов
+      // вынести в метод?
+      this.app = document.getElementById('app')
+      this.line = document.createElement('div');
+      this.range.classList.add('range');  
+      this.wrapper = document.createElement('div');
+      this.range = document.createElement('div');
+      this.wrapper.classList.add('wrapper');
+      this.app.appendChild(this.wrapper);
+      this.range.classList.add('range');
+      this.line.classList.add('line');
+      this.line.appendChild(this.range);
+      this.wrapper.appendChild(this.line);
+
       this.handlerMouseDown = this.mouseDown.bind(this);
       this.handlerMouseUp = this.mouseUp.bind(this);
       this.handlerMouseMove = this.mouseMove.bind(this);
