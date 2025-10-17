@@ -4,8 +4,8 @@ export function test() {
     range: any = document.createElement('div');
     app: any;
     line: HTMLElement | undefined;
-    // range: HTMLElement;
     wrapper: HTMLElement | undefined;
+    outputValue: any;
     // координаты мыши
     x: any = 0;
     y: any = 0;
@@ -27,19 +27,7 @@ export function test() {
     handlerMouseMove: any;
 
     constructor() {
-      // инициализация элементов
-      // вынести в метод?
-      this.app = document.getElementById('app')
-      this.line = document.createElement('div');
-      this.range.classList.add('range');  
-      this.wrapper = document.createElement('div');
-      this.range = document.createElement('div');
-      this.wrapper.classList.add('wrapper');
-      this.app.appendChild(this.wrapper);
-      this.range.classList.add('range');
-      this.line.classList.add('line');
-      this.line.appendChild(this.range);
-      this.wrapper.appendChild(this.line);
+      this.initElememts();
 
       this.handlerMouseDown = this.mouseDown.bind(this);
       this.handlerMouseUp = this.mouseUp.bind(this);
@@ -48,6 +36,28 @@ export function test() {
 
       document.addEventListener('mousedown', this.handlerMouseDown);
       document.addEventListener('mouseup', this.handlerMouseUp);
+    }
+
+    initElememts() {
+      // инициализация элементов
+      this.app = document.getElementById('app')
+      this.line = document.createElement('div');
+      this.wrapper = document.createElement('div');
+      this.range = document.createElement('div');
+      this.outputValue = document.createElement('div');
+
+      this.range.classList.add('range');  
+      this.range.classList.add('range');
+      this.line.classList.add('line');
+      this.wrapper.classList.add('wrapper');
+      this.outputValue.classList.add('outputValue');
+      
+      this.app.appendChild(this.wrapper);
+      this.line.appendChild(this.range);
+      this.wrapper.appendChild(this.line);
+      this.wrapper.appendChild(this.outputValue);
+
+      this.outputValue.textContent='0';
     }
 
     mouseDown() {
@@ -70,7 +80,7 @@ export function test() {
       if(this.x>=150 && this.x<=235) {
         this.coords.x = this.x;
         this.range.style.left = `${this.x-150}px`;
-        console.log(this.range.style.left);
+        this.outputValue.textContent = `${this.x-150}`;
       } else {
         this.coords.x = 0
       }
