@@ -8,13 +8,12 @@ export function test() {
     outputValue: any;
     // координаты мыши
     x: any = 0;
-    y: any = 0;
+    x_1: any = 0;
 
     // определяем координаты ползунка
     rangeCoords: any = this.range.getBoundingClientRect();
     coords: any = {
         x: this.rangeCoords.left,
-        y: this.rangeCoords.top + window.scrollY,
         minX: 0,
         maxX: 80
     };
@@ -66,7 +65,6 @@ export function test() {
 
     mouseMove(event: any) {
       this.x = event.clientX;
-      this.y = event.clientY;
       this.newPositionRange();
     }
 
