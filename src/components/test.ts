@@ -2,6 +2,8 @@ export function test() {
   class Input {
     // range: any = document.getElementById('range');
     range: any = document.createElement('div');
+    range_1: any = document.createElement('div');
+
     app: any;
     line: HTMLElement | undefined;
     wrapper: HTMLElement | undefined;
@@ -12,10 +14,13 @@ export function test() {
 
     // определяем координаты ползунка
     rangeCoords: any = this.range.getBoundingClientRect();
+    rangeCoords_1: any = this.range_1.getBoundingClientRect();
+
     coords: any = {
         x: this.rangeCoords.left,
-        minX: 0,
-        maxX: 80
+        x_1: this.rangeCoords_1.left,
+        // minX: 0,
+        // maxX: 80
     };
 
     positionRange: any;
@@ -43,16 +48,18 @@ export function test() {
       this.line = document.createElement('div');
       this.wrapper = document.createElement('div');
       this.range = document.createElement('div');
+      this.range_1 = document.createElement('div');
       this.outputValue = document.createElement('div');
 
       this.range.classList.add('range');  
-      this.range.classList.add('range');
+      this.range_1.classList.add('range_1');
       this.line.classList.add('line');
       this.wrapper.classList.add('wrapper');
       this.outputValue.classList.add('outputValue');
       
       this.app.appendChild(this.wrapper);
       this.line.appendChild(this.range);
+      this.line.appendChild(this.range_1);
       this.wrapper.appendChild(this.line);
       this.wrapper.appendChild(this.outputValue);
 
@@ -80,7 +87,7 @@ export function test() {
         this.range.style.left = `${this.x-150}px`;
         this.outputValue.textContent = `${this.x-150}`;
       } else {
-        this.coords.x = 0
+        this.coords.x = 0;
       }
     }
   }

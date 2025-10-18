@@ -29,8 +29,19 @@
 .range {
   position: absolute;
   left: 0;
-  /* top: 0; */
-  /* left: 50%; */
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  background-color: blue;
+  cursor: grab;
+  z-index: 100;
+}
+
+.range_1 {
+  position: absolute;
+  left: 10px;
   top: 50%;
   transform: translate(0, -50%);
   width: 15px;
