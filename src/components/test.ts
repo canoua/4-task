@@ -1,6 +1,5 @@
 export function test() {
   class Input {
-    // range: any = document.getElementById('range');
     range: any = document.createElement('div');
     range_1: any = document.createElement('div');
 
