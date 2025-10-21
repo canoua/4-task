@@ -1,4 +1,4 @@
-import { test } from './components/test'
+import { range } from './components/range'
 import './style.css'
 
-test()
+range()

@@ -1,4 +1,4 @@
-export function test() {
+export function range() {
   class Input {
     range: any = document.createElement('div');
     range_1: any = document.createElement('div');
@@ -58,7 +58,7 @@ export function test() {
       
       this.app.appendChild(this.wrapper);
       this.line.appendChild(this.range);
-      this.line.appendChild(this.range_1);
+      // this.line.appendChild(this.range_1);
       this.wrapper.appendChild(this.line);
       this.wrapper.appendChild(this.outputValue);
 
