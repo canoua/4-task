@@ -1,7 +1,7 @@
 export function range() {
   class Input {
     range: any = document.createElement('div');
-    range_1: any = document.createElement('div');
+    // range_1: any = document.createElement('div');
 
     app: any;
     line: HTMLElement | undefined;
@@ -13,11 +13,12 @@ export function range() {
 
     // определяем координаты ползунка
     rangeCoords: any = this.range.getBoundingClientRect();
-    rangeCoords_1: any = this.range_1.getBoundingClientRect();
+    // rangeCoords_1: any = this.range_1.getBoundingClientRect();
 
+    // координаты ползунка
     coords: any = {
         x: this.rangeCoords.left,
-        x_1: this.rangeCoords_1.left,
+        // x_1: this.rangeCoords_1.left,
         // minX: 0,
         // maxX: 80
     };
@@ -47,11 +48,11 @@ export function range() {
       this.line = document.createElement('div');
       this.wrapper = document.createElement('div');
       this.range = document.createElement('div');
-      this.range_1 = document.createElement('div');
+      // this.range_1 = document.createElement('div');
       this.outputValue = document.createElement('div');
 
       this.range.classList.add('range');  
-      this.range_1.classList.add('range_1');
+      // this.range_1.classList.add('range_1');
       this.line.classList.add('line');
       this.wrapper.classList.add('wrapper');
       this.outputValue.classList.add('outputValue');
@@ -70,7 +71,7 @@ export function range() {
     }
 
     mouseMove(event: any) {
-      this.x = event.clientX;
+      this.x = event.clientX - this.rangeCoords;
       this.newPositionRange();
     }
 
