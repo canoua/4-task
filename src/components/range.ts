@@ -74,7 +74,7 @@ export function range() {
       this.line.appendChild(this.range);
       // this.line.appendChild(this.range_1);
       this.wrapper.appendChild(this.line);
-      this.wrapper.appendChild(this.outputValue);
+      this.wrapper.prepend(this.outputValue);
 
       this.outputValue.textContent='0';
 
