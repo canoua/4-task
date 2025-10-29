@@ -68,7 +68,7 @@ export function range() {
       // this.range_1.classList.add('range_1');
       this.line.classList.add('line');
       this.wrapper.classList.add('wrapper');
-      this.outputValue.classList.add('outputValue');
+      this.outputValue.classList.add('output-value');
       
       this.app.appendChild(this.wrapper);
       this.line.appendChild(this.range);
