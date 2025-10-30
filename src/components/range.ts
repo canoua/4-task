@@ -3,23 +3,16 @@ export function range() {
     range: any = document.createElement('div');
     line: any = document.createElement('div');
    
-    // range_1: any = document.createElement('div');
-
     app: any;
-    // line: any;
-    // wrapper: any;
     outputValue: any;
-    // координаты мыши
     x: any = 0;
-    // x_1: any = 0;
-
+ 
     wrapper:any = document.createElement('div');
-    // определяем координаты ползунка
+    
     rangeCoords: any = this.range.getBoundingClientRect();
     wrapperCoords: any = this.wrapper.getBoundingClientRect();
     lineCoords: any = this.line.getBoundingClientRect();
-    // rangeCoords_1: any = this.range_1.getBoundingClientRect();
-
+  
     lineCoordsObj: any = {
       x: this.lineCoords.left
     }
@@ -31,7 +24,6 @@ export function range() {
     // координаты ползунка
     coords: any = {
       x: this.rangeCoords.left
-        // x_1: this.rangeCoords_1.left,
     };
 
     positionRange: any;
@@ -48,7 +40,7 @@ export function range() {
       this.handlerMouseDown = this.mouseDown.bind(this);
       this.handlerMouseUp = this.mouseUp.bind(this);
       this.handlerMouseMove = this.mouseMove.bind(this);
-      // this.positionRange = this.newPositionRange.bind(this);
+
 
       document.addEventListener('mousedown', this.handlerMouseDown);
       document.addEventListener('mouseup', this.handlerMouseUp);
@@ -59,26 +51,23 @@ export function range() {
       // инициализация элементов
       this.app = document.getElementById('app')
       
-      // this.wrapper = document.createElement('div');
       this.range = document.createElement('div');
-      // this.range_1 = document.createElement('div');
+     
       this.outputValue = document.createElement('div');
 
       this.range.classList.add('range');  
-      // this.range_1.classList.add('range_1');
       this.line.classList.add('line');
       this.wrapper.classList.add('wrapper');
       this.outputValue.classList.add('output-value');
       
       this.app.appendChild(this.wrapper);
       this.line.appendChild(this.range);
-      // this.line.appendChild(this.range_1);
       this.wrapper.appendChild(this.line);
       this.wrapper.prepend(this.outputValue);
 
       this.outputValue.textContent='0';
 
-      console.log(this.wrapperCoords);
+      console.log(this.wrapperCoordsObj);
     }
 
     mouseDown() {
@@ -93,26 +82,15 @@ export function range() {
         this.range.style.left = `${this.x}px`;
         this.outputValue.textContent = `${this.x}`;
       }
-     
-      // this.newPositionRange();
     }
 
     mouseUp() {
       document.removeEventListener('mousemove', this.handlerMouseMove);
-      // this.newPositionRange();
       if(this.x>=0 && this.x<=85) {
         this.range.style.left = `${this.x}px`;
         this.outputValue.textContent = `${this.x}`;
       }
-      console.log(this.lineCoords);
     }
-
-    // newPositionRange() {
-      // нужен рефактор)
-      // this.coords.x = this.x;
-      // this.range.style.left = `${this.x-this.coords.x}px`;
-      // this.outputValue.textContent = `${this.x}`;
-    // }
   }
 
     class Panel {
