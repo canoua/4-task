@@ -2,32 +2,16 @@ export function range() {
   class Input {
     range: any = document.createElement('div');
     line: any = document.createElement('div');
-   
     app: any;
     outputValue: any;
     x: any = 0;
- 
+    minX: any;
+    maxX: any;
     wrapper:any = document.createElement('div');
-    
     rangeCoords: any = this.range.getBoundingClientRect();
     wrapperCoords: any = this.wrapper.getBoundingClientRect();
     lineCoords: any = this.line.getBoundingClientRect();
-  
-    lineCoordsObj: any = {
-      x: this.lineCoords.left
-    }
-
-    wrapperCoordsObj: any = {
-      x: this.wrapperCoords.left
-    }
-
-    // координаты ползунка
-    coords: any = {
-      x: this.rangeCoords.left
-    };
-
     positionRange: any;
-      
 
     // свойства обработчиков событий мыши
     handlerMouseDown: any;
@@ -36,25 +20,21 @@ export function range() {
 
     constructor() {
       this.initElememts();
-
       this.handlerMouseDown = this.mouseDown.bind(this);
       this.handlerMouseUp = this.mouseUp.bind(this);
       this.handlerMouseMove = this.mouseMove.bind(this);
-
-
       document.addEventListener('mousedown', this.handlerMouseDown);
       document.addEventListener('mouseup', this.handlerMouseUp);
 
+      console.log(`Позиция line слева - ${this.minX}`);
+      console.log(`Позиция line справа - ${this.maxX}`);
     }
 
+    // инициализация элементов
     initElememts() {
-      // инициализация элементов
       this.app = document.getElementById('app')
-      
       this.range = document.createElement('div');
-     
       this.outputValue = document.createElement('div');
-
       this.range.classList.add('range');  
       this.line.classList.add('line');
       this.wrapper.classList.add('wrapper');
@@ -66,8 +46,13 @@ export function range() {
       this.wrapper.prepend(this.outputValue);
 
       this.outputValue.textContent='0';
-
-      console.log(this.wrapperCoordsObj);
+      const lineWidth = this.line.offsetWidth;
+      const linePosition = this.line.getBoundingClientRect();
+      const lineMaxPosition = lineWidth + linePosition.left;
+ 
+      console.log(lineWidth);
+      this.minX = linePosition.left;
+      this.maxX = lineMaxPosition;
     }
 
     mouseDown() {
@@ -75,21 +60,17 @@ export function range() {
     }
 
     mouseMove(event: any) {
-      this.x = event.clientX-150;
-      console.log(this.x);
+      this.x = event.clientX;
+      console.log(event.clientX);
       
-      if(this.x>=0 && this.x<=85) {
-        this.range.style.left = `${this.x}px`;
-        this.outputValue.textContent = `${this.x}`;
-      }
+      this.range.style.left = `${this.x}px`;
+      this.outputValue.textContent = `${this.x}`;
     }
 
     mouseUp() {
       document.removeEventListener('mousemove', this.handlerMouseMove);
-      if(this.x>=0 && this.x<=85) {
-        this.range.style.left = `${this.x}px`;
-        this.outputValue.textContent = `${this.x}`;
-      }
+      this.range.style.left = `${this.x}px`;
+      this.outputValue.textContent = `${this.x}`;
     }
   }
 
@@ -127,6 +108,6 @@ export function range() {
 
   document.addEventListener('DOMContentLoaded', function() {
     const input = new Input();
-    const panel = new Panel();
+    // const panel = new Panel();
   })
 }

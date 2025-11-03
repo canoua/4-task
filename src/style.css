@@ -5,15 +5,16 @@
 }
 
 #app {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 100vh;
+  /* display: flex; */
+  /* justify-content: space-around; */
+  /* align-items: center; */
+  /* height: 100vh; */
 }
 
 .wrapper {
   width: 100px;
   height: 7px;
+  margin-left: 150px;
 }
 
 .line {
@@ -39,18 +40,6 @@
   z-index: 100;
 }
 
-.range_1 {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translate(0, -50%);
-  width: 15px;
-  height: 15px;
-  border-radius: 100%;
-  background-color: blue;
-  cursor: grab;
-  z-index: 100;
-}
 
 .panel-container {
   border: 1px solid #000;
