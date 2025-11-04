@@ -1,4 +1,4 @@
-import { range } from './components/range'
+import { slider } from './components/slider'
 import './style.css'
 
-range()
+slider()

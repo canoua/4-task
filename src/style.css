@@ -15,6 +15,7 @@
   width: 100px;
   height: 7px;
   margin-left: 150px;
+  padding-top: 50px;
 }
 
 .line {
@@ -27,7 +28,7 @@
   position: relative;
 }
 
-.range {
+.thumb {
   position: absolute;
   left: 0;
   top: 50%;

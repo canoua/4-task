@@ -1,14 +1,14 @@
-export function range() {
-  class Input {
-    range: any = document.createElement('div');
+export function slider() {
+  class Slider {
+    thumb: any = document.createElement('div');
     line: any = document.createElement('div');
     app: any;
-    outputValue: any;
+    // outputValue: any;
     x: any = 0;
     minX: any;
     maxX: any;
     wrapper:any = document.createElement('div');
-    rangeCoords: any = this.range.getBoundingClientRect();
+    rangeCoords: any = this.thumb.getBoundingClientRect();
     wrapperCoords: any = this.wrapper.getBoundingClientRect();
     lineCoords: any = this.line.getBoundingClientRect();
     positionRange: any;
@@ -33,19 +33,19 @@ export function range() {
     // инициализация элементов
     initElememts() {
       this.app = document.getElementById('app')
-      this.range = document.createElement('div');
-      this.outputValue = document.createElement('div');
-      this.range.classList.add('range');  
+      this.thumb = document.createElement('div');
+      // this.outputValue = document.createElement('div');
+      this.thumb.classList.add('thumb');  
       this.line.classList.add('line');
       this.wrapper.classList.add('wrapper');
-      this.outputValue.classList.add('output-value');
+      // this.outputValue.classList.add('output-value');
       
       this.app.appendChild(this.wrapper);
-      this.line.appendChild(this.range);
+      this.line.appendChild(this.thumb);
       this.wrapper.appendChild(this.line);
-      this.wrapper.prepend(this.outputValue);
+      // this.wrapper.prepend(this.outputValue);
 
-      this.outputValue.textContent='0';
+      // this.outputValue.textContent='0';
       const lineWidth = this.line.offsetWidth;
       const linePosition = this.line.getBoundingClientRect();
       const lineMaxPosition = lineWidth + linePosition.left;
@@ -63,14 +63,14 @@ export function range() {
       this.x = event.clientX;
       console.log(event.clientX);
       
-      this.range.style.left = `${this.x}px`;
-      this.outputValue.textContent = `${this.x}`;
+      this.thumb.style.left = `${this.x}px`;
+      // this.outputValue.textContent = `${this.x}`;
     }
 
     mouseUp() {
       document.removeEventListener('mousemove', this.handlerMouseMove);
-      this.range.style.left = `${this.x}px`;
-      this.outputValue.textContent = `${this.x}`;
+      this.thumb.style.left = `${this.x}px`;
+      // this.outputValue.textContent = `${this.x}`;
     }
   }
 
@@ -107,7 +107,7 @@ export function range() {
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    const input = new Input();
+    const slider = new Slider();
     // const panel = new Panel();
   })
 }
