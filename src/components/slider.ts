@@ -21,13 +21,14 @@ export function slider() {
     constructor() {
       this.initElememts();
       this.handlerMouseDown = this.mouseDown.bind(this);
-      this.handlerMouseUp = this.mouseUp.bind(this);
+      // this.handlerMouseUp = this.mouseUp.bind(this);
       this.handlerMouseMove = this.mouseMove.bind(this);
       document.addEventListener('mousedown', this.handlerMouseDown);
-      document.addEventListener('mouseup', this.handlerMouseUp);
+      document.addEventListener('mousemove', this.handlerMouseMove);
+      // document.addEventListener('mouseup', this.handlerMouseUp);
 
-      console.log(`Позиция line слева - ${this.minX}`);
-      console.log(`Позиция line справа - ${this.maxX}`);
+      // console.log(`Позиция line слева - ${this.minX}`);
+      // console.log(`Позиция line справа - ${this.maxX}`);
     }
 
     // инициализация элементов
@@ -56,14 +57,19 @@ export function slider() {
     }
 
     mouseDown() {
-      document.addEventListener('mousemove', this.handlerMouseMove);
+      
+      
+      // document.addEventListener('mousemove', function() {
+        // console.log('mousedown');
+        // alert('hello')
+      // });
     }
 
     mouseMove(event: any) {
-      this.x = event.clientX;
+      // this.x = event.clientX;
       console.log(event.clientX);
       
-      this.thumb.style.left = `${this.x}px`;
+      // this.thumb.style.left = `${this.x}px`;
       // this.outputValue.textContent = `${this.x}`;
     }
 
