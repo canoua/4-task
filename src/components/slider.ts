@@ -55,14 +55,12 @@ export function slider() {
     mouseMove(e: any) {
       if(this.draggingAcces==true) {
         console.log(e.clientX);
+        this.thumb.style.left = `${e.clientX}px`;
       }
     }
 
     mouseUp(e: MouseEvent) {
-      // document.removeEventListener('mousemove', function() {
       this.draggingAcces = false;
-      // });
-      this.thumb.style.left = `${this.x}px`;
     }
   }
 
