@@ -12,14 +12,23 @@ export function slider() {
     wrapperCoords: any = this.wrapper.getBoundingClientRect();
     lineCoords: any = this.line.getBoundingClientRect();
     positionRange: any;
-    
-    draggingAcces: any = false;
+
+    // свойства обработчиков событий мыши
+    handlerMouseDown: any;
+    handlerMouseUp: any;
+    handlerMouseMove: any;
 
     constructor() {
       this.initElememts();
-      document.addEventListener('mousedown', (e) => this.mouseDown(e));
-      document.addEventListener('mousemove', (e) => this.mouseMove(e));
-      document.addEventListener('mouseup', (e) => this.mouseUp(e));
+      this.handlerMouseDown = this.mouseDown.bind(this);
+      // this.handlerMouseUp = this.mouseUp.bind(this);
+      this.handlerMouseMove = this.mouseMove.bind(this);
+      document.addEventListener('mousedown', this.handlerMouseDown);
+      document.addEventListener('mousemove', this.handlerMouseMove);
+      // document.addEventListener('mouseup', this.handlerMouseUp);
+
+      // console.log(`Позиция line слева - ${this.minX}`);
+      // console.log(`Позиция line справа - ${this.maxX}`);
     }
 
     // инициализация элементов
@@ -47,22 +56,27 @@ export function slider() {
       this.maxX = lineMaxPosition;
     }
 
-    mouseDown(e: MouseEvent) {
-      this.draggingAcces = true;
-    }
-
-
-    mouseMove(e: any) {
-      if(this.draggingAcces==true) {
-        console.log(e.clientX);
-      }
-    }
-
-    mouseUp(e: MouseEvent) {
-      // document.removeEventListener('mousemove', function() {
-      this.draggingAcces = false;
+    mouseDown() {
+      
+      
+      // document.addEventListener('mousemove', function() {
+        // console.log('mousedown');
+        // alert('hello')
       // });
+    }
+
+    mouseMove(event: any) {
+      // this.x = event.clientX;
+      console.log(event.clientX);
+      
+      // this.thumb.style.left = `${this.x}px`;
+      // this.outputValue.textContent = `${this.x}`;
+    }
+
+    mouseUp() {
+      document.removeEventListener('mousemove', this.handlerMouseMove);
       this.thumb.style.left = `${this.x}px`;
+      // this.outputValue.textContent = `${this.x}`;
     }
   }
 
@@ -100,5 +114,6 @@ export function slider() {
 
   document.addEventListener('DOMContentLoaded', function() {
     const slider = new Slider();
+    // const panel = new Panel();
   })
 }
