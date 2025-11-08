@@ -7,11 +7,11 @@ export function slider() {
     x: any = 0;
     minX: any;
     maxX: any;
+    middleThumb: any;
     wrapper:any = document.createElement('div');
     rangeCoords: any = this.thumb.getBoundingClientRect();
     wrapperCoords: any = this.wrapper.getBoundingClientRect();
     lineCoords: any = this.line.getBoundingClientRect();
-    positionRange: any;
     
     draggingAcces: any = false;
 
@@ -41,9 +41,11 @@ export function slider() {
       const lineWidth = this.line.offsetWidth;
       const linePosition = this.line.getBoundingClientRect();
       const lineMaxPosition = lineWidth + linePosition.left;
- 
-      console.log(lineWidth);
+      const middleThumb = this.thumb.offsetWidth / 2;
+
+      this.middleThumb = middleThumb;
       this.minX = linePosition.left;
+      
       this.maxX = lineMaxPosition;
     }
 
@@ -54,8 +56,12 @@ export function slider() {
 
     mouseMove(e: any) {
       if(this.draggingAcces==true) {
-        console.log(e.clientX);
-        this.thumb.style.left = `${e.clientX}px`;
+        if(e.clientX>=this.minX && e.clientX<=235) {
+          this.thumb.style.left = `${e.clientX-this.minX}px`;
+          // console.log(this.thumb.style.left);
+          console.log((e.clientX-this.minX)/85*100);
+        }
+        
       }
     }
 
