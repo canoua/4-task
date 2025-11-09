@@ -59,7 +59,7 @@ export function slider() {
         if(e.clientX>=this.minX && e.clientX<=235) {
           this.thumb.style.left = `${e.clientX-this.minX}px`;
           // console.log(this.thumb.style.left);
-          console.log((e.clientX-this.minX)/85*100);
+          console.log(Math.trunc((e.clientX-this.minX)/85*100));
         }
         
       }
@@ -67,6 +67,11 @@ export function slider() {
 
     mouseUp(e: MouseEvent) {
       this.draggingAcces = false;
+      if(e.clientX>=this.minX && e.clientX<=235) {
+          this.thumb.style.left = `${e.clientX-this.minX}px`;
+          // console.log(this.thumb.style.left);
+          console.log(Math.trunc((e.clientX-this.minX)/85*100));
+        }
     }
   }
 
