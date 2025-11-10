@@ -31,7 +31,7 @@
 
 .thumb {
   position: absolute;
-  left: 0;
+  display: block;
   top: 50%;
   transform: translate(0, -50%);
   width: 15px;
@@ -40,6 +40,14 @@
   background-color: blue;
   cursor: grab;
   z-index: 100;
+}
+
+.thumb-min {
+  left: 0;
+}
+
+.thumb-max {
+  left: 30px;
 }
 
 
