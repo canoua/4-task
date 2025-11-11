@@ -5,7 +5,7 @@ export function slider() {
     line: any = document.createElement('div');
     app: any;
  
-    x: any = 0;
+    // x: any = 0;
     minX: any;
     maxX: any;
     middleThumb: any;
@@ -52,7 +52,6 @@ export function slider() {
     mouseDown(e: MouseEvent) {
       this.draggingAcces = true;
     }
-
 
     mouseMove(e: any) {
       if(this.draggingAcces==true) {
