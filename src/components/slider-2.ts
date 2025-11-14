@@ -23,6 +23,11 @@ export function slider() {
       document.addEventListener('mousedown', (e) => this.mouseDown(e));
       document.addEventListener('mousemove', (e) => this.mouseMove(e));
       document.addEventListener('mouseup', (e) => this.mouseUp(e));
+
+      document.addEventListener('mouseup', () => {
+        this.draggingAcces = false;
+        this.draggingAccesMax = false;
+      })
     }
 
     // инициализация элементов
@@ -52,54 +57,38 @@ export function slider() {
     }
 
     mouseDown(e: any) {
-      if(e.target.className=='thumb thumb-min') {
-        // console.log('min');
+      if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min')) {
         this.draggingAcces = true;
-      } else if(e.target.className=='thumb thumb-max') {
-        // console.log('max');
+      } else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max')) {
         this.draggingAccesMax = true;
       }  
     }
 
     mouseMove(e: any) {
-      if(e.target.className == 'thumb thumb-min' && this.draggingAcces) {
-        // console.log(1);
-        if(e.clientX>=this.minX && e.clientX<=235) {
-          this.thumb.style.left = `${e.clientX-this.minX}px`;
+      if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min') && this.draggingAcces) {
+          
+        // if(e.clientX>=this.minX && e.clientX<=235) {
+          // const elemMin =  e.target.contains('thumb-min');
+          // позиция 1го ползунка - позиция мыши - минус позиция линии
+         e.target.style.left = `${e.clientX-this.minX}px`;
           console.log(Math.trunc((e.clientX-this.minX)/85*100));
-        }
-      } else if(e.target.className=='thumb thumb-max' && this.draggingAccesMax) {
+        // }
+      } else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max') && this.draggingAccesMax) {
         // console.log(2);
-        if(e.clientX>=this.minX && e.clientX<=235) {
-          this.thumbMax.style.left = `${e.clientX-this.minX}px`;
+        // if(e.clientX>=this.minX && e.clientX<=235) {
+          // const elem = e.target.contains('thumb-max')
+          e.target.style.left = `${e.clientX-this.minX}px`;
           console.log(Math.trunc((e.clientX-this.minX)/85*100));
-        }
+        // }
       }
     }
 
     mouseUp(e: any) {
-      if(e.target.className == 'thumb thumb-min' && this.draggingAcces) {
-        
-          if(e.clientX>=this.minX && e.clientX<=235) {
-          this.thumb.style.left = `${e.clientX-this.minX}px`;
-          console.log(Math.trunc((e.clientX-this.minX)/85*100));
-        }
+      if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min') || this.draggingAcces) {
         this.draggingAcces = false;
-      }
-
-      if(e.target.className == 'thumb thumb-max' && this.draggingAccesMax) {
-        // this.draggingAcces = false;
-        
-          if(e.clientX>=this.minX && e.clientX<=235) {
-          this.thumbMax.style.left = `${e.clientX-this.minX}px`;
-          console.log(Math.trunc((e.clientX-this.minX)/85*100));
-        }
+      } else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max') || this.draggingAccesMax) {
         this.draggingAccesMax = false;
        }
-      
-      
-
-      
     }
   }
 
