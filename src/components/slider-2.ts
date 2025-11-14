@@ -15,6 +15,8 @@ export function slider() {
     lineCoords: any = this.line.getBoundingClientRect();
     
     draggingAcces: any = false;
+    draggingAccesMax: any = false;
+
 
     constructor() {
       this.initElememts();
@@ -49,24 +51,55 @@ export function slider() {
       this.maxX = lineMaxPosition;
     }
 
-    mouseDown(e: MouseEvent) {
-      this.draggingAcces = true;
+    mouseDown(e: any) {
+      if(e.target.className=='thumb thumb-min') {
+        // console.log('min');
+        this.draggingAcces = true;
+      } else if(e.target.className=='thumb thumb-max') {
+        // console.log('max');
+        this.draggingAccesMax = true;
+      }  
     }
 
     mouseMove(e: any) {
-      if(this.draggingAcces==true) {
-        console.log(e.target);
-        
-        
+      if(e.target.className == 'thumb thumb-min' && this.draggingAcces) {
+        // console.log(1);
+        if(e.clientX>=this.minX && e.clientX<=235) {
+          this.thumb.style.left = `${e.clientX-this.minX}px`;
+          console.log(Math.trunc((e.clientX-this.minX)/85*100));
+        }
+      } else if(e.target.className=='thumb thumb-max' && this.draggingAccesMax) {
+        // console.log(2);
+        if(e.clientX>=this.minX && e.clientX<=235) {
+          this.thumbMax.style.left = `${e.clientX-this.minX}px`;
+          console.log(Math.trunc((e.clientX-this.minX)/85*100));
+        }
       }
     }
 
-    mouseUp(e: MouseEvent) {
-      this.draggingAcces = false;
-      // if(e.clientX>=this.minX && e.clientX<=235) {
-      //   this.thumb.style.left = `${e.clientX-this.minX}px`;
-      //   console.log(Math.trunc((e.clientX-this.minX)/85*100));
-      // }
+    mouseUp(e: any) {
+      if(e.target.className == 'thumb thumb-min' && this.draggingAcces) {
+        
+          if(e.clientX>=this.minX && e.clientX<=235) {
+          this.thumb.style.left = `${e.clientX-this.minX}px`;
+          console.log(Math.trunc((e.clientX-this.minX)/85*100));
+        }
+        this.draggingAcces = false;
+      }
+
+      if(e.target.className == 'thumb thumb-max' && this.draggingAccesMax) {
+        // this.draggingAcces = false;
+        
+          if(e.clientX>=this.minX && e.clientX<=235) {
+          this.thumbMax.style.left = `${e.clientX-this.minX}px`;
+          console.log(Math.trunc((e.clientX-this.minX)/85*100));
+        }
+        this.draggingAccesMax = false;
+       }
+      
+      
+
+      
     }
   }
 
