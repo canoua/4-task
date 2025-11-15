@@ -59,36 +59,34 @@ export function slider() {
     mouseDown(e: any) {
       if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min')) {
         this.draggingAcces = true;
-      } else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max')) {
+      }  else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max')) {
         this.draggingAccesMax = true;
-      }  
-    }
-
-    mouseMove(e: any) {
-      if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min') && this.draggingAcces) {
-          
-        // if(e.clientX>=this.minX && e.clientX<=235) {
-          // const elemMin =  e.target.contains('thumb-min');
-          // позиция 1го ползунка - позиция мыши - минус позиция линии
-         e.target.style.left = `${e.clientX-this.minX}px`;
-          console.log(Math.trunc((e.clientX-this.minX)/85*100));
-        // }
-      } else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max') && this.draggingAccesMax) {
-        // console.log(2);
-        // if(e.clientX>=this.minX && e.clientX<=235) {
-          // const elem = e.target.contains('thumb-max')
-          e.target.style.left = `${e.clientX-this.minX}px`;
-          console.log(Math.trunc((e.clientX-this.minX)/85*100));
-        // }
       }
     }
 
+    mouseMove(e: any) {
+      if(this.draggingAcces) {
+        this.thumb.style.left = `${e.clientX-this.minX}px`;
+        console.log(Math.trunc((e.clientX-this.minX)/85*100));
+      } else if(this.draggingAccesMax) {
+        this.thumbMax.style.left = `${e.clientX-this.minX}px`;
+      }
+        //  e.target.style.left = `${e.clientX-this.minX}px`;
+          
+        // }
+    
+    
+    }
+
     mouseUp(e: any) {
-      if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min') || this.draggingAcces) {
-        this.draggingAcces = false;
-      } else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max') || this.draggingAccesMax) {
-        this.draggingAccesMax = false;
-       }
+     if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min')) {
+      this.draggingAcces = false;
+     } else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max')) {
+      this.draggingAccesMax = false;
+
+     }
+        
+     
     }
   }
 
