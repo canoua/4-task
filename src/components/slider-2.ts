@@ -9,13 +9,14 @@ export function slider() {
     minX: any;
     maxX: any;
     wrapper:any = document.createElement('div');
-    rangeCoords: any = this.thumb.getBoundingClientRect();
-    wrapperCoords: any = this.wrapper.getBoundingClientRect();
-    lineCoords: any = this.line.getBoundingClientRect();
     draggingAcces: any = false;
     draggingAccesMax: any = false;
+
     thumbPosition: number = 0;
     thumbMaxPosition: number = 0;
+
+    thumbPositionInit: any;
+    thumbMaxPositionInit: any;
 
     constructor() {
       this.initElememts();
@@ -46,13 +47,17 @@ export function slider() {
       this.wrapper.appendChild(this.line);
       this.wrapper.prepend(this.outputValueMin);
       this.wrapper.prepend(this.outputValueMax);
-      this.outputValueMin.textContent=`Первое значение: ${this.thumbPosition}`;
-      this.outputValueMax.textContent=`Второе значение: ${this.thumbMaxPosition}`;
+      
       const lineWidth = this.line.offsetWidth;
       const linePosition = this.line.getBoundingClientRect();
-      const lineMaxPosition = lineWidth + linePosition.left;
+      // const lineMaxPosition = lineWidth + linePosition.left;
       this.minX = linePosition.left;
-      this.maxX = lineMaxPosition;
+      // this.maxX = lineMaxPosition;
+      this.thumbPositionInit = this.thumb.getBoundingClientRect().left - linePosition.left;
+      this.thumbMaxPositionInit = this.thumbMax.getBoundingClientRect().left - linePosition.left;
+
+      this.outputValueMin.textContent=`Первое значение: ${this.thumbPositionInit}`;
+      this.outputValueMax.textContent=`Второе значение: ${this.thumbMaxPositionInit}`;
     }
 
     mouseDown(e: any) {
@@ -65,17 +70,16 @@ export function slider() {
 
     mouseMove(e: any) {
       if(this.draggingAcces) {
-        if(e.clientX>=this.minX && e.clientX<=235) {
-          this.thumbPosition = e.clientX-this.minX;
-          this.thumb.style.left =  `${this.thumbPosition}px`;
-          this.outputValueMin.textContent=`Первое значение: ${Math.trunc((this.thumbPosition)/85*100)}`;
+        this.thumbPositionInit = e.clientX-this.minX;
+        if(e.clientX>=this.minX && e.clientX<=235 && this.thumbPositionInit < this.thumbMaxPositionInit - 15) {
+          this.thumb.style.left = `${this.thumbPositionInit}px`;
+          this.outputValueMin.textContent=`Первое значение: ${Math.trunc((this.thumbPositionInit)/85*100)}`;
         }
-        
       } else if(this.draggingAccesMax) {
-        if(e.clientX>=this.minX && e.clientX<=235) {
-          this.thumbMaxPosition = e.clientX-this.minX;
-          this.thumbMax.style.left = `${this.thumbMaxPosition}px`;
-          this.outputValueMax.textContent=`Второе значение: ${Math.trunc((this.thumbMaxPosition)/85*100)}`;
+        this.thumbMaxPositionInit = e.clientX-this.minX;
+        if(e.clientX>=this.minX && e.clientX<=235 && this.thumbMaxPositionInit) {
+          this.thumbMax.style.left = `${this.thumbMaxPositionInit}px`;
+          this.outputValueMax.textContent=`Второе значение: ${Math.trunc((this.thumbMaxPositionInit)/85*100)}`;
         }
       }
     }
@@ -89,7 +93,41 @@ export function slider() {
     }
   }
 
+  class Panel {
+    app: any;
+    title: any;
+    container: any;
+    inputStep: any;
+    inputWidth: any;
+    inputMin: any;
+    constructor() {
+      this.app = document.getElementById('app')
+      this.container = document.createElement('div');
+      this.container.classList.add('panel-container');
+
+      this.title = document.createElement('h1');
+      this.title.textContent = 'Панель для управления ползунком';
+
+      this.app.appendChild(this.container);
+      this.container.appendChild(this.title);
+      this.createInput(this.container, this.inputWidth, 'input-width', 'Длина', 'input-width');
+      this.createInput(this.container, this.inputStep, 'input-step', 'Шаг', 'input-step');
+      this.createInput(this.container, this.inputMin, 'input-min', 'Минимальное значение', 'input-min');
+    }
+
+    createInput(parent: any, element: any, name: string, placeholder: string, className: string) {
+      element = document.createElement('input');
+      element.setAttribute('type', 'text');
+      element.setAttribute('name', name); 
+      element.setAttribute('placeholder', placeholder);                                 
+      element.classList.add(className);
+      parent.appendChild(element);
+    }
+  }
+
+
   document.addEventListener('DOMContentLoaded', function() {
     const slider = new Slider();
+    const panel = new Panel();
   })
 }

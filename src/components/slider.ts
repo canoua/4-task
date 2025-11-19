@@ -68,7 +68,7 @@ export function slider() {
           }
           console.log(Math.trunc((e.clientX-this.minX)/85*100));
         }
-        
+
       }
     }
 
