@@ -12,10 +12,10 @@ export function slider() {
     rangeCoords: any = this.thumb.getBoundingClientRect();
     wrapperCoords: any = this.wrapper.getBoundingClientRect();
     lineCoords: any = this.line.getBoundingClientRect();
-    
     draggingAcces: any = false;
     draggingAccesMax: any = false;
-
+    thumbPosition: number = 0;
+    thumbMaxPosition: number = 0;
 
     constructor() {
       this.initElememts();
@@ -46,8 +46,8 @@ export function slider() {
       this.wrapper.appendChild(this.line);
       this.wrapper.prepend(this.outputValueMin);
       this.wrapper.prepend(this.outputValueMax);
-      this.outputValueMin.textContent='Первое значение: 0';
-      this.outputValueMax.textContent='Второе значение: 0';
+      this.outputValueMin.textContent=`Первое значение: ${this.thumbPosition}`;
+      this.outputValueMax.textContent=`Второе значение: ${this.thumbMaxPosition}`;
       const lineWidth = this.line.offsetWidth;
       const linePosition = this.line.getBoundingClientRect();
       const lineMaxPosition = lineWidth + linePosition.left;
@@ -66,14 +66,16 @@ export function slider() {
     mouseMove(e: any) {
       if(this.draggingAcces) {
         if(e.clientX>=this.minX && e.clientX<=235) {
-          this.thumb.style.left = `${e.clientX-this.minX}px`;
-          this.outputValueMin.textContent=`Первое значение: ${Math.trunc((e.clientX-this.minX)/85*100)}`;
+          this.thumbPosition = e.clientX-this.minX;
+          this.thumb.style.left =  `${this.thumbPosition}px`;
+          this.outputValueMin.textContent=`Первое значение: ${Math.trunc((this.thumbPosition)/85*100)}`;
         }
         
       } else if(this.draggingAccesMax) {
         if(e.clientX>=this.minX && e.clientX<=235) {
-          this.thumbMax.style.left = `${e.clientX-this.minX}px`;
-          this.outputValueMax.textContent=`Второе значение: ${Math.trunc((e.clientX-this.minX)/85*100)}`;
+          this.thumbMaxPosition = e.clientX-this.minX;
+          this.thumbMax.style.left = `${this.thumbMaxPosition}px`;
+          this.outputValueMax.textContent=`Второе значение: ${Math.trunc((this.thumbMaxPosition)/85*100)}`;
         }
       }
     }
