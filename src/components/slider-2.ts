@@ -48,11 +48,10 @@ export function slider() {
       this.wrapper.prepend(this.outputValueMin);
       this.wrapper.prepend(this.outputValueMax);
       
-      const lineWidth = this.line.offsetWidth;
       const linePosition = this.line.getBoundingClientRect();
-      // const lineMaxPosition = lineWidth + linePosition.left;
+      const lineMaxPosition = this.line.offsetWidth + linePosition.left;
       this.minX = linePosition.left;
-      // this.maxX = lineMaxPosition;
+      this.maxX = lineMaxPosition - this.thumb.offsetWidth;
       this.thumbPositionInit = this.thumb.getBoundingClientRect().left - linePosition.left;
       this.thumbMaxPositionInit = this.thumbMax.getBoundingClientRect().left - linePosition.left;
 
@@ -70,14 +69,18 @@ export function slider() {
 
     mouseMove(e: any) {
       if(this.draggingAcces) {
-        this.thumbPositionInit = e.clientX-this.minX;
-        if(e.clientX>=this.minX && e.clientX<=235 && this.thumbPositionInit < this.thumbMaxPositionInit - 15) {
+        // this.thumbPositionInit = e.clientX-this.minX;
+        // console.log(this.thumbPositionInit);
+        
+        if(e.clientX>=this.minX && e.clientX<=this.maxX && (this.thumbPositionInit < this.thumbMaxPositionInit - this.thumb.offsetWidth)) {
+          this.thumbPositionInit = e.clientX-this.minX;
           this.thumb.style.left = `${this.thumbPositionInit}px`;
           this.outputValueMin.textContent=`Первое значение: ${Math.trunc((this.thumbPositionInit)/85*100)}`;
         }
       } else if(this.draggingAccesMax) {
-        this.thumbMaxPositionInit = e.clientX-this.minX;
-        if(e.clientX>=this.minX && e.clientX<=235 && this.thumbMaxPositionInit) {
+          this.thumbMaxPositionInit = e.clientX-this.minX;
+        if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbMaxPositionInit > this.thumbPositionInit + this.thumb.offsetWidth) {
+        
           this.thumbMax.style.left = `${this.thumbMaxPositionInit}px`;
           this.outputValueMax.textContent=`Второе значение: ${Math.trunc((this.thumbMaxPositionInit)/85*100)}`;
         }
@@ -86,6 +89,10 @@ export function slider() {
 
     mouseUp(e: any) {
       if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min')) {
+        // if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbPositionInit < this.thumbMaxPositionInit - 15) {
+        //   this.thumb.style.left = `${this.thumbPositionInit}px`;
+        //   this.outputValueMin.textContent=`Первое значение: ${Math.trunc((this.thumbPositionInit)/85*100)}`;
+        // }
         this.draggingAcces = false;
       } else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max')) {
         this.draggingAccesMax = false;
