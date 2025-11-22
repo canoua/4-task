@@ -1,4 +1,4 @@
-import { slider } from './components/slider-2'
+import { slider } from './components/test-percent.ts'
 import './style.css'
 
 slider()
