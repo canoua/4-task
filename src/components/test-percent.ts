@@ -19,6 +19,7 @@ export function slider() {
     thumbMaxPositionInit: any;
 
     percent: any;
+    percentMax: any;
 
     constructor() {
       this.initElememts();
@@ -56,7 +57,7 @@ export function slider() {
       this.maxX = lineMaxPosition - this.thumb.offsetWidth;
       this.thumbPositionInit = this.thumb.getBoundingClientRect().left - linePosition.left;
       this.thumbMaxPositionInit = this.thumbMax.getBoundingClientRect().left - linePosition.left;
-
+      
       this.outputValueMin.textContent=`Первое значение: ${this.thumbPositionInit}`;
       this.outputValueMax.textContent=`Второе значение: ${this.thumbMaxPositionInit}`;
     }
@@ -71,18 +72,26 @@ export function slider() {
 
     mouseMove(e: any) {
       if(this.draggingAcces) {
+        this.percent = (e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100;
+        // console.log(this.percent);
+        
         // this.thumbPositionInit = e.clientX-this.minX;
-        // console.log(this.thumbPositionInit);
-        this.thumbPositionInit = e.clientX-this.minX;
-        if(e.clientX>=this.minX && e.clientX<=this.maxX && (Math.trunc((this.thumbPositionInit)/85*100) < Math.trunc((this.thumbMaxPositionInit)/85*100) - this.thumb.offsetWidth)) {
-          console.log( this.thumbPositionInit);
-          
-          this.thumb.style.left = `${this.thumbPositionInit}px`;
+        console.log(this.thumbPositionInit);
+        console.log(this.percentMax);
+        
+        this.thumbPositionInit = this.percent;
+        // this.thumbPositionInit = e.clientX-this.minX;
+        if(e.clientX>=this.minX && e.clientX<=this.maxX) {
+          if(this.percent<this.percentMax-15) {
+            this.thumb.style.left = `${this.thumbPositionInit}px`;
           this.outputValueMin.textContent=`Первое значение: ${Math.trunc((this.thumbPositionInit)/85*100)}`;
+          }// console.log(this.thumbPositionInit);
         }
       } else if(this.draggingAccesMax) {
-          this.thumbMaxPositionInit = e.clientX-this.minX;
-        if(e.clientX>=this.minX && e.clientX<=this.maxX && (this.thumbMaxPositionInit > this.thumbPositionInit + this.thumb.offsetWidth)) {
+        this.percentMax = (e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100;
+          // this.thumbMaxPositionInit = e.clientX-this.minX;
+          this.thumbMaxPositionInit = this.percentMax;
+        if(e.clientX>=this.minX && e.clientX<=this.maxX ) {
         console.log(this.thumbMaxPositionInit);
           this.thumbMax.style.left = `${this.thumbMaxPositionInit}px`;
           this.outputValueMax.textContent=`Второе значение: ${Math.trunc((this.thumbMaxPositionInit)/85*100)}`;
