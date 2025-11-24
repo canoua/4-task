@@ -1,16 +1,17 @@
 export function slider() {
   class Slider {
-    thumb: any = document.createElement('div');
-    thumbMax: any = document.createElement('div');
-    line: any = document.createElement('div');
-    app: any;
+    wrapper: HTMLElement = document.createElement('div');
+    thumb: HTMLElement = document.createElement('div');
+    thumbMax: HTMLElement = document.createElement('div');
+    line: HTMLElement = document.createElement('div');
+    app: HTMLElement | any;
     outputValueMin: any;
     outputValueMax: any;
     minX: any;
     maxX: any;
-    wrapper:any = document.createElement('div');
-    draggingAcces: any = false;
-    draggingAccesMax: any = false;
+   
+    draggingAcces: boolean = false;
+    draggingAccesMax: boolean = false;
 
     thumbPosition: number = 0;
     thumbMaxPosition: number = 0;
