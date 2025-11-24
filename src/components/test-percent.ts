@@ -4,11 +4,12 @@ export function slider() {
     thumb: HTMLElement = document.createElement('div');
     thumbMax: HTMLElement = document.createElement('div');
     line: HTMLElement = document.createElement('div');
+    range: HTMLElement = document.createElement('div');
     app: HTMLElement | any;
-    outputValueMin: any;
-    outputValueMax: any;
-    minX: any;
-    maxX: any;
+    outputValueMin: HTMLElement | any;
+    outputValueMax: HTMLElement | any;
+    minX: number | any;
+    maxX: number | any;
    
     draggingAcces: boolean = false;
     draggingAccesMax: boolean = false;
@@ -17,6 +18,7 @@ export function slider() {
     thumbMaxPosition: number = 0;
 
     thumbPositionInit: any;
+    rangePositionInit: any;
     thumbMaxPositionInit: any;
 
     percent: any;
@@ -39,6 +41,7 @@ export function slider() {
       this.app = document.getElementById('app')
       this.outputValueMin = document.createElement('div');
       this.outputValueMax = document.createElement('div');
+      this.range.classList.add('range');
       this.thumb.classList.add('thumb', 'thumb-min');  
       this.thumbMax.classList.add('thumb', 'thumb-max');  
       this.line.classList.add('line');
@@ -48,6 +51,7 @@ export function slider() {
       this.app.appendChild(this.wrapper);
       this.line.appendChild(this.thumb);
       this.line.appendChild(this.thumbMax);
+      this.line.appendChild(this.range);
       this.wrapper.appendChild(this.line);
       this.wrapper.prepend(this.outputValueMin);
       this.wrapper.prepend(this.outputValueMax);
@@ -58,6 +62,7 @@ export function slider() {
       this.maxX = lineMaxPosition - this.thumb.offsetWidth;
       this.thumbPositionInit = this.thumb.getBoundingClientRect().left - linePosition.left;
       this.thumbMaxPositionInit = this.thumbMax.getBoundingClientRect().left - linePosition.left;
+      this.rangePositionInit = this.thumbPositionInit;
       
       this.outputValueMin.textContent=`Первое значение: ${this.thumbPositionInit}`;
       this.outputValueMax.textContent=`Второе значение: ${this.thumbMaxPositionInit}`;
@@ -75,19 +80,20 @@ export function slider() {
       if(this.draggingAcces) {
         this.percent = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 100));
         this.thumbPositionInit = this.percent;
+        this.rangePositionInit = this.percent;
       
         if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbPositionInit<(this.thumbMaxPositionInit-15)) {
           this.thumb.style.left = `${this.thumbPositionInit}px`;
+          this.range.style.left = `${this.rangePositionInit}px`;
+          this.range.style.width = `${this.thumbMaxPositionInit - this.thumbPositionInit}px`;
           this.outputValueMin.textContent=`Первое значение: ${Math.trunc((this.thumbPositionInit)/85*100)}`;
         }
       } else if(this.draggingAccesMax) {
         this.percentMax = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 85));
-        console.log(this.thumbMaxPositionInit);
-        // this.percentMax = (e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100;
         this.thumbMaxPositionInit = this.percentMax;
         if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbMaxPositionInit>(this.thumbPositionInit+15)) {
-          
           this.thumbMax.style.left = `${this.thumbMaxPositionInit}px`;
+          this.range.style.width = `${this.thumbMaxPositionInit - this.thumbPositionInit}px`;
           this.outputValueMax.textContent=`Второе значение: ${Math.trunc((this.thumbMaxPositionInit)/85*100)}`;
         }
       }
@@ -95,7 +101,6 @@ export function slider() {
 
     mouseUp(e: any) {
       if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min')) {
-
         this.draggingAcces = false;
       } else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max')) {
         this.draggingAccesMax = false;
