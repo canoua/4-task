@@ -63,7 +63,8 @@ export function slider() {
       this.thumbPositionInit = this.thumb.getBoundingClientRect().left - linePosition.left;
       this.thumbMaxPositionInit = this.thumbMax.getBoundingClientRect().left - linePosition.left;
       this.rangePositionInit = this.thumbPositionInit;
-      
+
+      this.range.style.left = `${this.rangePositionInit}px`;
       this.outputValueMin.textContent=`Первое значение: ${this.thumbPositionInit}`;
       this.outputValueMax.textContent=`Второе значение: ${this.thumbMaxPositionInit}`;
     }
@@ -80,9 +81,9 @@ export function slider() {
       if(this.draggingAcces) {
         this.percent = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 100));
         this.thumbPositionInit = this.percent;
-        this.rangePositionInit = this.percent;
+        this.rangePositionInit = this.percent + 1;
       
-        if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbPositionInit<(this.thumbMaxPositionInit-15)) {
+        if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbPositionInit<(this.thumbMaxPositionInit - 15)) {
           this.thumb.style.left = `${this.thumbPositionInit}px`;
           this.range.style.left = `${this.rangePositionInit}px`;
           this.range.style.width = `${this.thumbMaxPositionInit - this.thumbPositionInit}px`;
@@ -93,7 +94,8 @@ export function slider() {
         this.thumbMaxPositionInit = this.percentMax;
         if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbMaxPositionInit>(this.thumbPositionInit+15)) {
           this.thumbMax.style.left = `${this.thumbMaxPositionInit}px`;
-          this.range.style.width = `${this.thumbMaxPositionInit - this.thumbPositionInit}px`;
+          this.range.style.left = `${this.rangePositionInit}px`;
+          this.range.style.width = `${this.thumbMaxPositionInit - this.thumbPositionInit + 1}px`;
           this.outputValueMax.textContent=`Второе значение: ${Math.trunc((this.thumbMaxPositionInit)/85*100)}`;
         }
       }

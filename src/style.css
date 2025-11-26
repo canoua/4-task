@@ -55,7 +55,8 @@
   height: 7px;
   width: 30px;
   left: 0;
-  top: 0;
+  top: 50%;
+  transform: translate(0, -50%);
   background-color: blue;
 }
 
