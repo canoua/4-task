@@ -5,6 +5,7 @@ export function slider() {
     thumbMax: HTMLElement = document.createElement('div');
     line: HTMLElement = document.createElement('div');
     range: HTMLElement = document.createElement('div');
+    outputWrapper: any = document.createElement('div');
     app: HTMLElement | any;
     outputValueMin: HTMLElement | any;
     outputValueMax: HTMLElement | any;
@@ -53,8 +54,11 @@ export function slider() {
       this.line.appendChild(this.thumbMax);
       this.line.appendChild(this.range);
       this.wrapper.appendChild(this.line);
-      this.wrapper.prepend(this.outputValueMin);
-      this.wrapper.prepend(this.outputValueMax);
+     
+      this.wrapper.prepend(this.outputWrapper);
+      this.outputWrapper.classList.add('output-wrapper');
+      this.outputWrapper.appendChild(this.outputValueMin);
+      this.outputWrapper.appendChild(this.outputValueMax);
       
       const linePosition = this.line.getBoundingClientRect();
       const lineMaxPosition = this.line.offsetWidth + linePosition.left;
@@ -65,8 +69,8 @@ export function slider() {
       this.rangePositionInit = this.thumbPositionInit;
 
       this.range.style.left = `${this.rangePositionInit}px`;
-      this.outputValueMin.textContent=`Первое значение: ${this.thumbPositionInit}`;
-      this.outputValueMax.textContent=`Второе значение: ${this.thumbMaxPositionInit}`;
+      this.outputValueMin.textContent=`min ${this.thumbPositionInit}`;
+      this.outputValueMax.textContent=`max ${this.thumbMaxPositionInit}`;
     }
 
     mouseDown(e: any) {
@@ -87,7 +91,7 @@ export function slider() {
           this.thumb.style.left = `${this.thumbPositionInit}px`;
           this.range.style.left = `${this.rangePositionInit}px`;
           this.range.style.width = `${this.thumbMaxPositionInit - this.thumbPositionInit}px`;
-          this.outputValueMin.textContent=`Первое значение: ${Math.trunc((this.thumbPositionInit)/85*100)}`;
+          this.outputValueMin.textContent=`min ${Math.trunc((this.thumbPositionInit)/85*100)}`;
         }
       } else if(this.draggingAccesMax) {
         this.percentMax = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 85));
@@ -96,7 +100,7 @@ export function slider() {
           this.thumbMax.style.left = `${this.thumbMaxPositionInit}px`;
           this.range.style.left = `${this.rangePositionInit}px`;
           this.range.style.width = `${this.thumbMaxPositionInit - this.thumbPositionInit + 1}px`;
-          this.outputValueMax.textContent=`Второе значение: ${Math.trunc((this.thumbMaxPositionInit)/85*100)}`;
+          this.outputValueMax.textContent=`max ${Math.trunc((this.thumbMaxPositionInit)/85*100)}`;
         }
       }
     }
@@ -110,6 +114,8 @@ export function slider() {
     }
   }
 
+
+  
 
   document.addEventListener('DOMContentLoaded', function() {
     const slider = new Slider();

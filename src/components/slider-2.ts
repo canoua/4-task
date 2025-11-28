@@ -3,6 +3,7 @@ export function slider() {
     thumb: any = document.createElement('div');
     thumbMax: any = document.createElement('div');
     line: any = document.createElement('div');
+    // outputWrapper: any = document.createElement('div');
     app: any;
     outputValueMin: any;
     outputValueMax: any;
@@ -39,14 +40,16 @@ export function slider() {
       this.thumbMax.classList.add('thumb', 'thumb-max');  
       this.line.classList.add('line');
       this.wrapper.classList.add('wrapper');
+      // this.outputWrapper.classList.add('output-wrapper');
       this.outputValueMin.classList.add('output-value');
       this.outputValueMax.classList.add('output-value');
       this.app.appendChild(this.wrapper);
       this.line.appendChild(this.thumb);
       this.line.appendChild(this.thumbMax);
       this.wrapper.appendChild(this.line);
-      this.wrapper.prepend(this.outputValueMin);
-      this.wrapper.prepend(this.outputValueMax);
+      this.wrapper.prepend(this.outputWrapper);
+      // this.outputWrapper.prepend(this.outputValueMin);
+      // this.outputWrapper.prepend(this.outputValueMax);
       
       const linePosition = this.line.getBoundingClientRect();
       const lineMaxPosition = this.line.offsetWidth + linePosition.left;
