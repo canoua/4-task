@@ -69,8 +69,6 @@ export function slider() {
 
     mouseMove(e: any) {
       if(this.draggingAcces) {
-        // this.thumbPositionInit = e.clientX-this.minX;
-        // console.log(this.thumbPositionInit);
         this.thumbPositionInit = e.clientX-this.minX;
         if(e.clientX>=this.minX && e.clientX<=this.maxX && (Math.trunc((this.thumbPositionInit)/85*100) < Math.trunc((this.thumbMaxPositionInit)/85*100) - this.thumb.offsetWidth)) {
           console.log( this.thumbPositionInit);
@@ -90,10 +88,6 @@ export function slider() {
 
     mouseUp(e: any) {
       if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min')) {
-        // if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbPositionInit < this.thumbMaxPositionInit - 15) {
-        //   this.thumb.style.left = `${this.thumbPositionInit}px`;
-        //   this.outputValueMin.textContent=`Первое значение: ${Math.trunc((this.thumbPositionInit)/85*100)}`;
-        // }
         this.draggingAcces = false;
       } else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max')) {
         this.draggingAccesMax = false;
