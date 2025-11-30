@@ -1,93 +1,129 @@
 export function slider() {
   class Slider {
-    thumb: any = document.createElement('div');
-    thumbMax: any = document.createElement('div');
-    line: any = document.createElement('div');
-    app: any;
-    // outputValue: any;
-    x: any = 0;
-    minX: any;
-    maxX: any;
-    middleThumb: any;
-    wrapper:any = document.createElement('div');
-    rangeCoords: any = this.thumb.getBoundingClientRect();
-    wrapperCoords: any = this.wrapper.getBoundingClientRect();
-    lineCoords: any = this.line.getBoundingClientRect();
-    
-    draggingAcces: any = false;
+    wrapper: HTMLElement = document.createElement('div');
+    thumb: HTMLElement = document.createElement('div');
+    thumbMax: HTMLElement = document.createElement('div');
+    line: HTMLElement = document.createElement('div');
+    range: HTMLElement = document.createElement('div');
+    outputWrapper: any = document.createElement('div');
+    app: HTMLElement | any;
+    outputValueMin: HTMLElement | any;
+    outputValueMax: HTMLElement | any;
+    minX: number | any;
+    maxX: number | any;
+   
+    draggingAcces: boolean = false;
+    draggingAccesMax: boolean = false;
+
+    thumbPosition: number = 0;
+    thumbMaxPosition: number = 0;
+
+    thumbPositionInit: any;
+    rangePositionInit: any;
+    thumbMaxPositionInit: any;
+
+    percent: any;
+    percentMax: any;
 
     constructor() {
       this.initElememts();
       document.addEventListener('mousedown', (e) => this.mouseDown(e));
       document.addEventListener('mousemove', (e) => this.mouseMove(e));
       document.addEventListener('mouseup', (e) => this.mouseUp(e));
+
+      document.addEventListener('mouseup', () => {
+        this.draggingAcces = false;
+        this.draggingAccesMax = false;
+      })
+      
     }
 
     // инициализация элементов
     initElememts() {
       this.app = document.getElementById('app')
-      // this.outputValue = document.createElement('div');
+      this.outputValueMin = document.createElement('div');
+      this.outputValueMax = document.createElement('div');
+      this.range.classList.add('range');
       this.thumb.classList.add('thumb', 'thumb-min');  
       this.thumbMax.classList.add('thumb', 'thumb-max');  
       this.line.classList.add('line');
       this.wrapper.classList.add('wrapper');
-      // this.outputValue.classList.add('output-value');
-      
+      this.outputValueMin.classList.add('output-value');
+      this.outputValueMax.classList.add('output-value');
       this.app.appendChild(this.wrapper);
       this.line.appendChild(this.thumb);
       this.line.appendChild(this.thumbMax);
+      this.line.appendChild(this.range);
       this.wrapper.appendChild(this.line);
-      // this.wrapper.prepend(this.outputValue);
-
-      // this.outputValue.textContent='0';
-      const lineWidth = this.line.offsetWidth;
-      const linePosition = this.line.getBoundingClientRect();
-      const lineMaxPosition = lineWidth + linePosition.left;
-      const middleThumb = this.thumb.offsetWidth / 2;
-
-      this.middleThumb = middleThumb;
-      this.minX = linePosition.left;
+     
+      this.wrapper.prepend(this.outputWrapper);
+      this.outputWrapper.classList.add('output-wrapper');
+      this.outputWrapper.appendChild(this.outputValueMin);
+      this.outputWrapper.appendChild(this.outputValueMax);
       
-      this.maxX = lineMaxPosition;
+      const linePosition = this.line.getBoundingClientRect();
+      const lineMaxPosition = this.line.offsetWidth + linePosition.left;
+      this.minX = linePosition.left;
+      this.maxX = lineMaxPosition - this.thumb.offsetWidth;
+      this.thumbPositionInit = this.thumb.getBoundingClientRect().left - linePosition.left;
+      this.thumbMaxPositionInit = this.thumbMax.getBoundingClientRect().left - linePosition.left;
+      this.rangePositionInit = this.thumbPositionInit;
+
+      this.range.style.left = `${this.rangePositionInit}px`;
+      this.outputValueMin.textContent=`min ${this.thumbPositionInit}`;
+      this.outputValueMax.textContent=`max ${this.thumbMaxPositionInit}`;
     }
 
-    mouseDown(e: MouseEvent) {
-      this.draggingAcces = true;
-    }
-
-
-    mouseMove(e: any) {
-      if(this.draggingAcces==true) {
-        if(e.clientX>=this.minX && e.clientX<=235) {
-          this.thumb.style.left = `${e.clientX-this.minX}px`;
-          // console.log(this.thumb.style.left);
-         if(e.target.className==='thumb thumb-min') {
-            console.log(e.target);
-          } else if(e.target.className==='thumb thumb-max'){
-            console.log('max');
-          }
-          console.log(Math.trunc((e.clientX-this.minX)/85*100));
-        }
-
+    mouseDown(e: any) {
+      if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min')) {
+        this.draggingAcces = true;
+      }  else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max')) {
+        this.draggingAccesMax = true;
       }
     }
 
-    mouseUp(e: MouseEvent) {
-      this.draggingAcces = false;
-      if(e.clientX>=this.minX && e.clientX<=235) {
-        this.thumb.style.left = `${e.clientX-this.minX}px`;
-        console.log(Math.trunc((e.clientX-this.minX)/85*100));
+    mouseMove(e: any) {
+      if(this.draggingAcces) {
+        this.percent = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 100));
+        this.thumbPositionInit = this.percent;
+        this.rangePositionInit = this.percent + 1;
+      
+        if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbPositionInit<(this.thumbMaxPositionInit - 15)) {
+          this.thumb.style.left = `${this.thumbPositionInit}px`;
+          this.range.style.left = `${this.rangePositionInit}px`;
+          this.range.style.width = `${this.thumbMaxPositionInit - this.thumbPositionInit}px`;
+          this.outputValueMin.textContent=`min ${Math.trunc((this.thumbPositionInit)/85*100)}`;
+        }
+      } else if(this.draggingAccesMax) {
+        this.percentMax = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 85));
+        this.thumbMaxPositionInit = this.percentMax;
+        if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbMaxPositionInit>(this.thumbPositionInit+15)) {
+          this.thumbMax.style.left = `${this.thumbMaxPositionInit}px`;
+          this.range.style.left = `${this.rangePositionInit}px`;
+          this.range.style.width = `${this.thumbMaxPositionInit - this.thumbPositionInit + 1}px`;
+          this.outputValueMax.textContent=`max ${Math.trunc((this.thumbMaxPositionInit)/85*100)}`;
+        }
+      }
+    }
+
+    mouseUp(e: any) {
+      if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min')) {
+        this.draggingAcces = false;
+      } else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max')) {
+        this.draggingAccesMax = false;
       }
     }
   }
 
-    class Panel {
+
+  class Panel {
       app: any;
       title: any;
       container: any;
       inputStep: any;
       inputWidth: any;
       inputMin: any;
+
       constructor() {
         this.app = document.getElementById('app')
         this.container = document.createElement('div');
@@ -98,9 +134,11 @@ export function slider() {
 
         this.app.appendChild(this.container);
         this.container.appendChild(this.title);
+        this.createInput(this.container, 'input', 'input', 'step')
+        this.createInput(this.container, 'input', 'input', 'step')
       }
 
-      createInput(parent: any, element: any, name: string, placeholder: string, className: string) {
+      createInput(parent?: any, element?: any, name?: string, placeholder?: string, className?: string) {
         element = document.createElement('input');
         element.setAttribute('type', 'text');
         element.setAttribute('name', name); 
@@ -110,7 +148,9 @@ export function slider() {
       }
   }
 
+
   document.addEventListener('DOMContentLoaded', function() {
     const slider = new Slider();
+    const panel = new Panel();
   })
 }

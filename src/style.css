@@ -6,16 +6,15 @@
 
 #app {
   display: flex;
-  /* justify-content: space-around; */
   justify-content: space-between;
-  /* align-items: center; */
+  width: 100%;
+  align-items: center;
+  padding: 0 50px;
   height: 100vh;
 }
 
 .wrapper {
   width: 100px;
-  /* margin-left: 150px; */
-  /* padding-top: 50px; */
 }
 
 .line {
