@@ -25,8 +25,11 @@ export function slider() {
     percent: any;
     percentMax: any;
 
-    constructor() {
-      this.initElememts();
+    constructor(min: number, max: number) {
+      this.thumbPositionInit = min;
+      this.thumbMaxPositionInit = max;
+      // max = ;
+      this.initElememts(min, max);
       document.addEventListener('mousedown', (e) => this.mouseDown(e));
       document.addEventListener('mousemove', (e) => this.mouseMove(e));
       document.addEventListener('mouseup', (e) => this.mouseUp(e));
@@ -39,7 +42,9 @@ export function slider() {
     }
 
     // инициализация элементов
-    initElememts() {
+    initElememts(min: number, max: number) {
+      // this.thumbPositionInit = min;
+      // this.thumbMaxPositionInit = max;
       this.app = document.getElementById('app')
       this.outputValueMin = document.createElement('div');
       this.outputValueMax = document.createElement('div');
@@ -64,14 +69,18 @@ export function slider() {
       const linePosition = this.line.getBoundingClientRect();
       const lineMaxPosition = this.line.offsetWidth + linePosition.left;
       this.minX = linePosition.left;
-      this.maxX = lineMaxPosition - this.thumb.offsetWidth;
-      this.thumbPositionInit = this.thumb.getBoundingClientRect().left - linePosition.left;
-      this.thumbMaxPositionInit = this.thumbMax.getBoundingClientRect().left - linePosition.left;
-      this.rangePositionInit = this.thumbPositionInit;
+      this.maxX = lineMaxPosition - this.thumb.offsetWidth; 
 
-      this.range.style.left = `${this.rangePositionInit}px`;
-      this.outputValueMin.textContent=`min ${this.thumbPositionInit}`;
-      this.outputValueMax.textContent=`max ${this.thumbMaxPositionInit}`;
+      // this.percent = Math.max(0, Math.min((this.thumb.getBoundingClientRect().left - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 100));
+
+      // this.thumbPositionInit = linePosition.left + min;
+      this.thumb.style.left = `${min}px`
+      this.thumbMaxPositionInit = this.thumbMax.getBoundingClientRect().left - linePosition.left;
+      // this.rangePositionInit = this.thumbPositionInit;
+
+      this.range.style.left = `${min+1}px`;
+      this.outputValueMin.textContent=`min ${min}`;
+      this.outputValueMax.textContent=`max ${max}`;
     }
 
     mouseDown(e: any) {
@@ -150,7 +159,7 @@ export function slider() {
 
 
   document.addEventListener('DOMContentLoaded', function() {
-    const slider = new Slider();
+    const slider = new Slider(30, 65);
     const panel = new Panel();
   })
 }
