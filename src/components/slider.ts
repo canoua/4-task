@@ -71,12 +71,10 @@ export function slider() {
       this.minX = linePosition.left;
       this.maxX = lineMaxPosition - this.thumb.offsetWidth; 
 
-      // this.percent = Math.max(0, Math.min((this.thumb.getBoundingClientRect().left - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 100));
-
-      // this.thumbPositionInit = linePosition.left + min;
-      this.thumb.style.left = `${min}px`
-      this.thumbMaxPositionInit = this.thumbMax.getBoundingClientRect().left - linePosition.left;
-      // this.rangePositionInit = this.thumbPositionInit;
+      this.percent = Math.max(0, Math.min((min)/(this.line.offsetWidth)*100, 100));
+      this.thumb.style.left = `${this.percent}px`;
+      this.percentMax = Math.max(0, Math.min((max)/(this.line.offsetWidth)*100, 85));
+      this.thumbMax.style.left = `${this.percentMax}px`;
 
       this.range.style.left = `${min+1}px`;
       this.outputValueMin.textContent=`min ${min}`;
@@ -159,7 +157,7 @@ export function slider() {
 
 
   document.addEventListener('DOMContentLoaded', function() {
-    const slider = new Slider(30, 65);
+    const slider = new Slider(30, 100);
     const panel = new Panel();
   })
 }
