@@ -26,6 +26,7 @@ export function slider() {
     percentMax: any;
 
     constructor(min: number, max: number) {
+      
       this.thumbPositionInit = min;
       this.thumbMaxPositionInit = max;
       // max = ;
@@ -71,14 +72,14 @@ export function slider() {
       this.minX = linePosition.left;
       this.maxX = lineMaxPosition - this.thumb.offsetWidth; 
 
-      this.percent = Math.max(0, Math.min((min)/(this.line.offsetWidth)*100, 100));
+      this.percent = Math.max(0, Math.min(min/(this.line.offsetWidth)*100, 100));
       this.thumb.style.left = `${this.percent}px`;
-      this.percentMax = Math.max(0, Math.min((max)/(this.line.offsetWidth)*100, 85));
+      this.percentMax = Math.max(0, Math.min(max/(this.line.offsetWidth)*100, 85));
       this.thumbMax.style.left = `${this.percentMax}px`;
 
       this.range.style.left = `${min+1}px`;
-      this.outputValueMin.textContent=`min ${min}`;
-      this.outputValueMax.textContent=`max ${max}`;
+      this.outputValueMin.textContent=`min ${this.percent}`;
+      this.outputValueMax.textContent=`max ${this.percentMax}`;
     }
 
     mouseDown(e: any) {
@@ -157,7 +158,7 @@ export function slider() {
 
 
   document.addEventListener('DOMContentLoaded', function() {
-    const slider = new Slider(30, 100);
+    const slider = new Slider(0, 100);
     const panel = new Panel();
   })
 }

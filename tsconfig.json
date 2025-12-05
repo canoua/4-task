@@ -19,7 +19,10 @@
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    // for testing ts
+    "types": ["jest", "node"]
   },
   "include": ["src"]
 }
