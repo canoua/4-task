@@ -4,5 +4,5 @@ import './style.css'
 
   document.addEventListener('DOMContentLoaded', function() {
     const slider = new Slider(50, 75);
-    const panel = new Panel();
+    // const panel = new Panel();
   })

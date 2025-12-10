@@ -60,7 +60,7 @@ export class Slider {
     this.maxX = lineMaxPosition - this.thumb.offsetWidth; 
     this.percent = Math.max(0, Math.min((min-this.thumb.offsetWidth/2)/(this.line.offsetWidth)*100, 100));
     this.thumb.style.left = `${this.percent}px`;
-    this.percentMax = Math.max(0, Math.min((max-this.thumb.offsetWidth/2)/(this.line.offsetWidth)*100, 85));
+    this.percentMax = Math.max(0, Math.min((max-this.thumb.offsetWidth/2)/(this.line.offsetWidth)*100, 100));
     this.thumbMax.style.left = `${this.percentMax}px`;
     this.range.style.left = `${min+1}px`;
     this.outputValueMin.textContent=`min ${min}`;
@@ -88,7 +88,7 @@ export class Slider {
         this.outputValueMin.textContent=`min ${Math.trunc((this.thumbPositionInit)/85*100)}`;
       }
     } else if(this.draggingAccesMax) {
-      this.percentMax = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 85));
+      this.percentMax = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 100));
       this.thumbMaxPositionInit = this.percentMax;
       if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbMaxPositionInit>(this.thumbPositionInit+15)) {
         this.thumbMax.style.left = `${this.thumbMaxPositionInit}px`;
