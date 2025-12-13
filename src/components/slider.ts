@@ -90,11 +90,11 @@ export class Slider {
     } else if(this.draggingAccesMax) {
       this.percentMax = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 100));
       this.thumbMaxPositionInit = this.percentMax;
-      if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbMaxPositionInit>(this.thumbPositionInit+15)) {
+      if(e.clientX>=this.minX && e.clientX<=this.maxX && this.percentMax>(this.percent+15)) {
         this.thumbMax.style.left = `${this.percentMax}px`;
         this.range.style.left = `${this.percent}px`;
-        this.range.style.width = `${this.thumbMaxPositionInit - this.thumbPositionInit + 1}px`;
-        this.outputValueMax.textContent=`max ${Math.trunc((this.thumbMaxPositionInit)/85*100)}`;
+        this.range.style.width = `${this.percentMax - this.percent + 1}px`;
+        this.outputValueMax.textContent=`max ${Math.trunc((this.percentMax)/85*100)}`;
       }
     }
   }
