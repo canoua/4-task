@@ -19,13 +19,15 @@ export class Slider {
   thumbMaxPositionInit: any;
   percent: any;
   percentMax: any;
+  step: number;
 
-  constructor(min: number, max: number) {
+  constructor(min: number, max: number, step: number) {
     this.thumbPositionInit = min;
     this.thumbMaxPositionInit = max;
+    this.step = step;
     this.initElememts(min, max);
     document.addEventListener('mousedown', (e) => this.mouseDown(e));
-    document.addEventListener('mousemove', (e) => this.mouseMove(e));
+    document.addEventListener('mousemove', (e) => this.mouseMove(e, step));
     document.addEventListener('mouseup', (e) => this.mouseUp(e));
 
     document.addEventListener('mouseup', () => {
@@ -75,22 +77,25 @@ export class Slider {
     }
   }
 
-  mouseMove(e: any) {
+  mouseMove(e: any, step: number) {
     if(this.draggingAcces) {
       this.percent = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 100));
-      this.thumbPositionInit = this.percent;
       this.rangePositionInit = this.percent + 1;
+      let valueMin = Math.trunc((this.percent)/85*100);
     
-      if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbPositionInit<(this.thumbMaxPositionInit - 15)) {
+      if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbPositionInit<(this.thumbMaxPositionInit - this.thumb.offsetWidth) && this.percent % step == 0) {
         this.thumb.style.left = `${this.percent}px`;
         this.range.style.left = `${this.percent}px`;
-        this.range.style.width = `${this.thumbMaxPositionInit - this.thumbPositionInit}px`;
-        this.outputValueMin.textContent=`min ${Math.trunc((this.thumbPositionInit)/85*100)}`;
+        this.range.style.width = `${this.percentMax - this.percent}px`;
+        // if(valueMin % step == 0) {
+          this.outputValueMin.textContent=`min ${valueMin}`;
+        // }
+        
       }
     } else if(this.draggingAccesMax) {
       this.percentMax = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 100));
       this.thumbMaxPositionInit = this.percentMax;
-      if(e.clientX>=this.minX && e.clientX<=this.maxX && this.percentMax>(this.percent+15)) {
+      if(e.clientX>=this.minX && e.clientX<=this.maxX && this.percentMax>(this.percent + this.thumb.offsetWidth)) {
         this.thumbMax.style.left = `${this.percentMax}px`;
         this.range.style.left = `${this.percent}px`;
         this.range.style.width = `${this.percentMax - this.percent + 1}px`;
