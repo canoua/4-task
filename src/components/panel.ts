@@ -1,4 +1,4 @@
-import { Slider } from "./slider";
+import { Slider } from "./slider/index.";
 
 export class Panel{
   slider: Slider | any;

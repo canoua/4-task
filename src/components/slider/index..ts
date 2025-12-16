@@ -61,7 +61,7 @@ export class Slider {
     this.minX = linePosition.left;
     this.maxX = lineMaxPosition - this.thumb.offsetWidth; 
     this.percent = Math.max(0, Math.min((min-this.thumb.offsetWidth/2)/(this.line.offsetWidth)*100, 100));
-    this.thumb.style.left = `${this.percent}px`;
+    this.setThumbPosition(this.thumb, this.percent);
     this.percentMax = Math.max(0, Math.min((max-this.thumb.offsetWidth/2)/(this.line.offsetWidth)*100, 100));
     this.thumbMax.style.left = `${this.percentMax}px`;
     this.range.style.left = `${min+1}px`;
@@ -69,45 +69,60 @@ export class Slider {
     this.outputValueMax.textContent=`max ${max}`;
   }
 
+  setThumbPosition(thumb: HTMLElement, positionPercent: number) {
+    thumb.style.left = `${positionPercent}px`;
+  }
+
   mouseDown(e: any) {
-    if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min')) {
+    if (
+      e.target.classList.contains('thumb') && 
+      e.target.classList.contains('thumb-min')
+    ) {
       this.draggingAcces = true;
-    }  else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max')) {
+    }  else if (e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max')) {
       this.draggingAccesMax = true;
     }
   }
 
   mouseMove(e: any, step: number) {
-    if(this.draggingAcces) {
-      this.percent = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 100));
+    if (this.draggingAcces) {
+      this.percent = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth) * 100, 100));
       this.rangePositionInit = this.percent + 1;
-      let valueMin = Math.trunc((this.percent)/85*100);
-    
-      if(e.clientX>=this.minX && e.clientX<=this.maxX && this.thumbPositionInit<(this.thumbMaxPositionInit - this.thumb.offsetWidth) && this.percent % step == 0) {
+      let valueMin = Math.trunc((this.percent)/85 * 100);
+      
+      if (
+        e.clientX>=this.minX && 
+        e.clientX<=this.maxX && 
+        this.thumbPositionInit<(this.thumbMaxPositionInit - this.thumb.offsetWidth) 
+        && this.percent % step == 0
+      ) {
         this.thumb.style.left = `${this.percent}px`;
         this.range.style.left = `${this.percent}px`;
         this.range.style.width = `${this.percentMax - this.percent}px`;
-        // if(valueMin % step == 0) {
-          this.outputValueMin.textContent=`min ${valueMin}`;
-        // }
-        
+        this.outputValueMin.textContent=`min ${Math.round(valueMin / step) * step}`;
       }
-    } else if(this.draggingAccesMax) {
-      this.percentMax = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth)*100, 100));
+    } else if (this.draggingAccesMax) {
+      this.percentMax = Math.max(0, Math.min((e.clientX - this.line.getBoundingClientRect().left)/(this.line.offsetWidth) * 100, 100));
       this.thumbMaxPositionInit = this.percentMax;
-      if(e.clientX>=this.minX && e.clientX<=this.maxX && this.percentMax>(this.percent + this.thumb.offsetWidth)) {
+      let valueMax = Math.trunc((this.percentMax)/85 * 100)
+      if (
+        e.clientX>=this.minX && 
+        e.clientX<=this.maxX && 
+        this.percentMax>(this.percent + this.thumb.offsetWidth) && 
+        this.percentMax % step == 0
+      ) {
         this.thumbMax.style.left = `${this.percentMax}px`;
         this.range.style.left = `${this.percent}px`;
         this.range.style.width = `${this.percentMax - this.percent + 1}px`;
-        this.outputValueMax.textContent=`max ${Math.trunc((this.percentMax)/85*100)}`;
+        this.outputValueMax.textContent=`max ${Math.round(valueMax / step) * step}`;
       }
     }
   }
 
   mouseUp(e: any) {
-    if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min')) {
+    if (e.target.classList.contains('thumb') && e.target.classList.contains('thumb-min')) {
       this.draggingAcces = false;
-    } else if(e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max')) {
+    } else if (e.target.classList.contains('thumb') && e.target.classList.contains('thumb-max')) {
       this.draggingAccesMax = false;
     }
   }
