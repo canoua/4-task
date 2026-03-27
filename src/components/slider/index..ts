@@ -20,6 +20,7 @@ export class Slider {
   percent: any;
   percentMax: any;
   step: number;
+  linePosition: any;
 
   constructor(min: number, max: number, step: number) {
     this.thumbPositionInit = min;
