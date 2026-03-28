@@ -1,12 +1,13 @@
 import { Slider } from "./slider/index.";
 
-export class Panel{
+export class Panel {
   slider: Slider | any;
   app: HTMLElement | null;
   title: any;
   container: any;
   inputStep: any;
   inputWidth: any;
+  // inputMax: any;
   inputMin: any;
   button: HTMLElement | null;
 
@@ -32,7 +33,16 @@ export class Panel{
     const inputMin = document.querySelector('.input-min');
     const inputMax = document.querySelector('.input-max');
     const inputStep = document.querySelector('.input-step');
-    this.button.addEventListener('click', () => this.getValues(inputMin.value, inputMax.value, inputStep.value));
+    
+    this.button.addEventListener('click', () => this.getValues(inputMin.value));
+    return inputMin.value;
+    // const sliderUpdate = new Slider(inputMin.value, inputMax.value, inputStep.value);
+
+    // function validation(elem: Element | null) {
+      // if (elem == inputMin) {
+        // elem.value = 
+      // }
+    // }
   }
 
   createInput(parent?: any, element?: any, name?: string, placeholder?: string, className?: string) {
@@ -44,7 +54,7 @@ export class Panel{
     parent.appendChild(element);
   }
 
-  getValues(...element: any) {
+  getValues(element: any) {
     console.log(element);
     this.container.children.input.value = '';
   }
